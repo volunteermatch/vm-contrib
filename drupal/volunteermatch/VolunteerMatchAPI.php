@@ -2,6 +2,7 @@
 
 	/**
 	 * Defines a static class for managing communication through VM API v2
+	 * (Drupal independant except for the one call to drupal_http_request() [line 54])
 	 * @author Sharon Paisner
 	 */
 	class VolunteerMatchAPI {
@@ -9,7 +10,6 @@
 		private static $key;
 		private static $username;
 		private static $lastHeaders;
-		private static $lastTimestamp;
 		private static $lastResponse;
 		
 		public function init($vmPath, $vmKey, $vmUsername) {
@@ -19,10 +19,14 @@
 		}
 		
 		private function sendRequest($action, $query = NULL, $type = 'GET') {
-			$timestamp = time();
+			$headers_string = $_COOKIE['vmapi_session_headers'];
+			if (!empty($headers_string))
+				self::$lastHeaders = json_decode($headers_string);
 			
-			if (empty(self::$lastTimestamp) || self::$lastTimestamp + 600 < $timestamp) {
+			if (empty(self::$lastHeaders)) {
 				// need to recreate our headers
+				$timestamp = time();
+				
 				$nonce = hash('sha1', openssl_random_pseudo_bytes(20));
 				$date = date('Y-m-d\TH:i:sO', $timestamp);
 				$digest = base64_encode(hash('sha256', $nonce . $date . self::$key, TRUE));
@@ -38,14 +42,16 @@
 									  '"');
 				
 				self::$lastHeaders = $header_array;
+				// by default, expire headers in 10 minutes
+				setcookie('vmapi_session_headers', json_encode(self::$lastHeaders), $timestamp + 600, '/');
 			}
 			
-			//print_r(json_encode($query));
-			$json_query = urlencode(json_encode($query));
+			$json_query = json_encode($query);
+			//print_r($json_query);
 			$url = self::$path;
 			$url .= '?action=' . $action;
 			if ($query != NULL)
-				$url .= '&query=' . $json_query;
+				$url .= '&query=' . urlencode($json_query);
 			
 			// upon reviewing the code for this class, drupal_http_request() is the only method
 			// dependant upon drupal. in order to make the entire class drupal-independant
@@ -53,7 +59,6 @@
 			self::$lastResponse = drupal_http_request($url, self::$lastHeaders, $type);
 			if (self::$lastResponse->code > 200)
 				print_r(self::$lastResponse);
-			self::$lastTimestamp = $timestamp;
 		}
 		
 		private function displayResponse($type = 'none') {
@@ -67,6 +72,7 @@
 					return $formattedData['methods'];
 				case 'member detail':
 				case 'member summary':
+				case 'reviews detail':
 					return self::displayArrayAsHTML($formattedData);
 				case 'opp detail':
 				case 'opp summary':
@@ -185,13 +191,15 @@
 				$data['fieldsToDisplay'][] = 'mission';
 				$data['fieldsToDisplay'][] = 'url';
 				$data['fieldsToDisplay'][] = 'contact';
+			} else {
+				$data['fieldsToDisplay'][] = 'plaintextDescription';
 			}
 			self::sendRequest('searchOrganizations', $data);
 			return self::displayResponse($display);
 		}
 		
 		public function getOrganizationReviewsSummary($orgId) {
-			$data = array('id' => array($orgId),
+			$data = array('ids' => array($orgId),
 						  'fieldsToDisplay' => array('avgRating', 'numReviews'));
 			self::sendRequest('searchOrganizations', $data);
 			return self::displayResponse('reviews summary');

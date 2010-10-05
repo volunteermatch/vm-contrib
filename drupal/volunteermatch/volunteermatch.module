@@ -346,7 +346,6 @@ function volunteermatch_menu() {
 			'description' => vm_reformatMethodName($method),
 			'page callback' => 'vm_'.$method,
 			'access arguments' => array('access volunteermatch content'),
-//			'file' => 'volunteermatch.helper.inc'
 			'type' => MENU_CALLBACK
 		);
 	}
@@ -357,7 +356,6 @@ function volunteermatch_menu() {
 		'page callback' => 'drupal_get_form',
 		'page arguments' => array('vm_search_opps_simple'),
 		'access arguments' => array('access volunteermatch content'),
-//		'file' => 'volunteermatch.helper.inc'
 		'type' => MENU_CALLBACK
 	);
 
@@ -367,7 +365,6 @@ function volunteermatch_menu() {
 		'page callback' => 'drupal_get_form',
 		'page arguments' => array('vm_search_opps_advanced'),
 		'access arguments' => array('access volunteermatch content'),
-//		'file' => 'volunteermatch.helper.inc'
 		'type' => MENU_CALLBACK
 	);
 	
@@ -377,16 +374,22 @@ function volunteermatch_menu() {
 		'page callback' => 'drupal_get_form',
 		'page arguments' => array('vm_search_orgs_simple'),
 		'access arguments' => array('access volunteermatch content'),
-//		'file' => 'volunteermatch.helper.inc'
+		'type' => MENU_CALLBACK
+	);
+
+	$items['vm/search-orgs-advanced'] = array(
+		'title' => t('Search VolunteerMatch Organizations - advanced form'),
+		'description' => t('An advanced form for searching VM organizations'),
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('vm_search_orgs_advanced'),
+		'access arguments' => array('access volunteermatch content'),
 		'type' => MENU_CALLBACK
 	);
 
 	$items['vm/referral-form'] = array(
 		'title' => t('Tell the organization about yourself!'),
 		'page callback' => 'vm_createReferralForm',
-//		'page arguments' => array('vm_referral_form', 3),
 		'access arguments' => array('access volunteermatch content'),
-//		'file' => 'volunteermatch.helper.inc'
 		'type' => MENU_CALLBACK
 	);
 	
@@ -434,10 +437,22 @@ function vm_create_search_query($form_state) {
 	if (!empty($form_state['values']['preferred_partners']))
 		$query2['partners'] = $form_state['values']['preferred_partners'];
 	if (!empty($form_state['values']['interest_area'])) {
-		$query2['categoryIds'] = array_values($form_state['values']['interest_area']);
+		$values = array();
+		foreach ($form_state['values']['interest_area'] as $index => $set) {
+			if ($set)
+				$values[] = $index;
+		}
+		if (!empty($values))
+			$query2['categoryIds'] = $values;
 	}
 	if (!empty($form_state['values']['great_for'])) {
-		$query2['greatFor'] = array_values($form_state['values']['great_for']);
+		$values = array();
+		foreach ($form_state['values']['great_for'] as $index => $set) {
+			if ($set)
+				$values[] = $index;
+		}
+		if (!empty($values))
+			$query2['greatFor'] = $values;
 	}
 	$query2['location'] = $form_state['values']['location'];
 	$query_json = urlencode(json_encode($query2));
@@ -634,6 +649,9 @@ function vm_search_opps_advanced($type = 'vm_opp_search_advanced') {
 }
 
 function vm_search_opps_advanced_submit($form, &$form_state) {
+//	print_r($form);
+//	print_r($form_state);
+
 	$query = vm_create_search_query($form_state);
 	$form_state['redirect'] = 'vm/searchOpportunities/' . $query;
 }
@@ -904,7 +922,7 @@ function vm_getOrganizationReferrals($query = NULL) {
 function vm_getOrganizationReviews($query = NULL) {
 	$page_content = '';
 	$data = VolunteerMatchAPI::getOrganizationReviews((int)$query);
-	print_r($data);
+	$page_content .= $data;
 	return $page_content;
 }
 
@@ -956,7 +974,7 @@ function vm_format_opp_details($data) {
 
 		$formatted_opps .= '<h3>';		
 		$options = array("attributes" => array("title" => $opp['title']));
-		$query = urlencode(json_encode(array('location' => $opp['location']['postalCode'], 'id' => $opp['id'])));
+		$query = urlencode(json_encode(array('ids' => array($opp['id']))));
 		$link = l($opp['title'], 'vm/getOpportunityDetail/'.$query, $options);
 		$formatted_opps .= $link;
 		$formatted_opps .= '</h3>';		
@@ -1283,7 +1301,7 @@ function vm_format_opps($data, $query) {
 
 		$formatted_opps .= '<h3>';		
 		$options = array("attributes" => array("title" => $opp['title']));
-		$json_query = urlencode(json_encode(array('location' => $opp['location']['postalCode'], 'id' => $opp['id'])));
+		$json_query = urlencode(json_encode(array('ids' => array($opp['id']))));
 		$link = l($opp['title'], 'vm/getOpportunityDetail/'.$json_query, $options);
 		$formatted_opps .= $link;
 		$formatted_opps .= '</h3>';		
@@ -1306,12 +1324,12 @@ function vm_format_opps($data, $query) {
 		$link = l($opp['parentOrg']['name'], 'vm/getOrganizationDetail/'.$opp['parentOrg']['id'], $options);
 		$formatted_opps .= $link;
 		// get number of reviews and average score for orgs
-//		$reviews = VolunteerMatchAPI::getOrganizationReviewsSummary($opp['parentOrg']['id']);
-//		if (!empty($reviews['organizations'])) {
-//			$formatted_opps .= ' ' . format_review_stars($reviews['organizations'][0]['avgRating']) . ' ';
-//			$link = l('' . $reviews['organizations'][0]['numReviews'] . ' reviews', 'vm/getOrganizationReviews/'.$opp['parentOrg']['id']);
-//			$formatted_opps .= '(' . $link . ')';
-//		}
+		$reviews = VolunteerMatchAPI::getOrganizationReviewsSummary($opp['parentOrg']['id']);
+		if (!empty($reviews['organizations'])) {
+			$formatted_opps .= ' ' . format_review_stars($reviews['organizations'][0]['avgRating']) . ' ';
+			$link = l('' . $reviews['organizations'][0]['numReviews'] . ' reviews', 'vm/getOrganizationReviews/'.$opp['parentOrg']['id']);
+			$formatted_opps .= '(' . $link . ')';
+		}
 		$formatted_opps .= '</div>';
 		
 		$formatted_opps .= '</div>';
@@ -1323,14 +1341,22 @@ function vm_format_opps($data, $query) {
 function format_review_stars($averageRating) {
 	$html_stars = '';
 	$segments = $averageRating / 20;
+	$remainder = $averageRating % 20;
+	$half = (abs($remainder - 10) < 4 ? TRUE : FALSE);
 	
-	for ($i = 0; $i < 5; --$i) {
-		if ($segments < $i || $averageRating == 0)
-			$file = 'empty';
-		else if ($segments == $i)
-			$file = 'half';
-		else
+	for ($i = 1; $i <= 5; ++$i) {
+		if ($segments >= $i)
 			$file = 'full';
+		else if ($segments + 1 >= $i) {
+			if ($remainder > 16)
+				$file = 'full';
+			else if ($half)
+				$file = 'half';
+			else
+				$file = 'empty';
+		}
+		else
+			$file = 'empty';
 		
 		$html_stars .= '<img src="sites/all/modules/volunteermatch/star-' . $file . '">';
 	}
@@ -1355,6 +1381,7 @@ function vm_searchOrganizations($query = NULL) {
 		return drupal_get_form('vm_disambiguate_location', vm_create_locations_array($data['locations']), $query);
 	}
 
+	//print_r($data);
 	$page_content .= vm_format_orgs($data, $query);
 	return $page_content;
 }
@@ -1400,22 +1427,28 @@ function vm_format_orgs($data, $query) {
 		$formatted_orgs .= '<div class="orgdetail" id="' . $org['id'] . '">';
 
 		$formatted_orgs .= '<h3>';		
-		$options = array("attributes" => array("title" => $org['name']));
-		$json_query = urlencode(json_encode(array('location' => $org['location']['postalCode'], 'id' => $org['id'])));
-		$link = l($org['name'], 'vm/getOrganizationDetail/'.$json_query, $options);
+		$name = str_replace("\\'", "'", $org['name']);
+		$name = str_replace('\\"', '"', $name);
+		$options = array("attributes" => array("title" => $name));
+		$json_query = urlencode(json_encode(array('ids' => array($org['id']))));
+		$link = l($name, 'vm/getOrganizationDetail/'.$json_query, $options);
 		$formatted_orgs .= $link;
 		$formatted_orgs .= '</h3>';		
 
-		$formatted_orgs .= '<h4>Description</h4>';
 		$formatted_orgs .= '<div class=org_description>';
-		$formatted_orgs .= ''.$org['description'];
+		$desc = substr($org['plaintextDescription'], 0, 140);
+		$desc = str_replace("\\'", "'", $desc);
+		$desc = str_replace('\\"', '"', $desc);
+		if (strlen($org['plaintextDescription']) > 140) {
+			$desc .= "... ";
+			$options = array("attributes" => array("title" => "More >"));
+			$json_query = urlencode(json_encode(array('ids' => array($org['id']))));
+			$link = l("More >", "vm/getOrganizationDetail/".$json_query, $options);
+			$desc .= $link;
+		}
+		$formatted_orgs .= $desc;
 		$formatted_orgs .+ '</div>';
-		
-		$formatted_orgs .= '<h4>Mission Statement</h4>';
-		$formatted_orgs .= '<div class=org_mission>';
-		$formatted_orgs .= ''.$org['mission'];
-		$formatted_orgs .+ '</div>';
-		
+				
 		if (isset($org['url'])) {
 			$formatted_orgs .= '<div class=org_url>';
 			$options = array("attributes" => array("title" => $org['name']));
@@ -1438,9 +1471,11 @@ function vm_format_org_details($data) {
 		$formatted_orgs .= '<div class="orgdetail" id="' . $org['id'] . '">';
 
 		$formatted_orgs .= '<h3>';		
-		$options = array("attributes" => array("title" => $org['name']));
-		$json_query = urlencode(json_encode(array('location' => $org['location']['postalCode'], 'id' => $org['id'])));
-		$link = l($org['name'], 'vm/getOrganizationDetail/'.$json_query, $options);
+		$name = str_replace("\\'", "'", $org['name']);
+		$name = str_replace('\\"', '"', $name);
+		$options = array("attributes" => array("title" => $name));
+		$json_query = urlencode(json_encode(array('ids' => array($org['id']))));
+		$link = l($name, 'vm/getOrganizationDetail/'.$json_query, $options);
 		$formatted_orgs .= $link;
 		$formatted_orgs .= '</h3>';		
 
