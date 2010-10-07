@@ -248,9 +248,9 @@
 /**
  * example use:
  
- VolunteerMatchAPI::init('http://www.stage.volunteermatch.org/api/call',
-							'f8639edf6893baf516fbfd075a0fba2b',
-							'volunteermatch v2');
+ VolunteerMatchAPI::init('http://www.volunteermatch.org/api/call',
+							'abcdefghijklmnopqrstuvwxyz',
+							'username');
  $data = VolunteerMatchAPI::testing();
  
  */

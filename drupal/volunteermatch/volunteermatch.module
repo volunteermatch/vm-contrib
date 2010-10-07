@@ -1387,7 +1387,8 @@ function vm_searchOrganizations($query = NULL) {
 }
 
 function vm_getOrganizationDetail($query = NULL) {
-	$data = VolunteerMatchAPI::searchOrganizations(json_decode(urldecode($query), TRUE), 'org detail');
+	$new_query = array('ids' => array($query));
+	$data = VolunteerMatchAPI::searchOrganizations($new_query, 'org detail');
 	$page_content = vm_format_org_details($data);
 	return $page_content;
 }
