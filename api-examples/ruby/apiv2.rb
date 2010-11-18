@@ -51,9 +51,9 @@ class VolunteerMatchApi
 end
 
 api      = VolunteerMatchApi.new(account_name, api_key) # JSON returned is {"name":"World","result":"Hello World!"}
-response = api.helloWorld("World")
-puts response.name # "World"
-puts response.result # "Hello World!"
+response = api.helloWorld("VolunteerMatch")
+puts response.name # "VolunteerMatch"
+puts response.result # "Hello VolunteerMatch!"
 
 
 
