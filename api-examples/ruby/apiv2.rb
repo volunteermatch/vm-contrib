@@ -16,7 +16,6 @@ else
 end
 
 class VolunteerMatchApi
-  attr_accessor :account_name, :api_key
 
   def initialize (account_name, api_key)
     @account_name = account_name
@@ -48,6 +47,7 @@ class VolunteerMatchApi
     raise "HTTP error code #{res.code}" unless res.code == "200"
     OpenStruct.new(JSON.parse res.body)
   end
+  
 end
 
 api      = VolunteerMatchApi.new(account_name, api_key) # JSON returned is {"name":"World","result":"Hello World!"}
