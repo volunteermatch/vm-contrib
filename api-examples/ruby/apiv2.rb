@@ -23,8 +23,8 @@ class VolunteerMatchApi
     @api_key      = api_key
   end
 
-  def helloWorld
-    api_call :helloWorld, {:name => 'World'}.to_json
+  def helloWorld(name)
+    api_call :helloWorld, {:name => name}.to_json
   end
 
   protected
@@ -46,14 +46,14 @@ class VolunteerMatchApi
     end
 
     raise "HTTP error code #{res.code}" unless res.code == "200"
-    puts res.body
     OpenStruct.new(JSON.parse res.body)
   end
 end
 
-api = VolunteerMatchApi.new(account_name, api_key) # JSON returned is {"name":"World","result":"Hello World!"}
-puts api.helloWorld.name # Outputs "World"
-puts api.helloWorld.result # Outputs "Hello World!"
+api      = VolunteerMatchApi.new(account_name, api_key) # JSON returned is {"name":"World","result":"Hello World!"}
+response = api.helloWorld("World")
+puts response.name # "World"
+puts response.result # "Hello World!"
 
 
 
