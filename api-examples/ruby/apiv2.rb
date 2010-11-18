@@ -40,18 +40,15 @@ class VolunteerMatchApi
     req.add_field('X-WSSE', 'UsernameToken Username="' + @account_name + '", PasswordDigest="' + password_digest + '", ' +
         'Nonce="' + nonce + '", Created="' + creation_time + '"')
 
-    res = Net::HTTP.new(url.host, url.port).start do |http|
-      http.request(req)
-    end
-
+    res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
     raise "HTTP error code #{res.code}" unless res.code == "200"
     OpenStruct.new(JSON.parse res.body)
   end
   
 end
 
-api      = VolunteerMatchApi.new(account_name, api_key) # JSON returned is {"name":"World","result":"Hello World!"}
-response = api.helloWorld("VolunteerMatch")
+api      = VolunteerMatchApi.new(account_name, api_key)
+response = api.helloWorld("VolunteerMatch") # JSON {"name":"VolunteerMatch","result":"Hello VolunteerMatch!"}
 puts response.name # "VolunteerMatch"
 puts response.result # "Hello VolunteerMatch!"
 
