@@ -23,12 +23,12 @@ class VolunteerMatchApi
   end
 
   def helloWorld(name)
-    api_call :helloWorld, {:name => name}.to_json
+    call :helloWorld, {:name => name}.to_json
   end
 
   protected
 
-  def api_call(action, json_query)
+  def call(action, json_query)
     nonce           = Digest::SHA2.hexdigest(rand.to_s)[0, 20]
     creation_time   = Time.now.utc.strftime("%Y-%m-%dT%H:%m:%S%z")
     password_digest = Base64.encode64(Digest::SHA2.digest(nonce + creation_time + @api_key)).chomp
