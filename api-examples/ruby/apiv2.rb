@@ -22,7 +22,7 @@ class VolunteerMatchApi
     @api_key      = api_key
   end
 
-  def helloWorld(name)
+  def hello_world(name)
     call :helloWorld, {:name => name}.to_json
   end
 
@@ -33,6 +33,7 @@ class VolunteerMatchApi
     creation_time   = Time.now.utc.strftime("%Y-%m-%dT%H:%m:%S%z")
     password_digest = Base64.encode64(Digest::SHA2.digest(nonce + creation_time + @api_key)).chomp
     url             = URI.parse("http://www.volunteermatch.org/api/call?action=#{action.to_s}&query=" + URI.encode(json_query))
+puts url
 
     req             = Net::HTTP::Get.new(url.request_uri)
     req.add_field('Content-Type', 'application/json')
@@ -48,7 +49,7 @@ class VolunteerMatchApi
 end
 
 api = VolunteerMatchApi.new(account_name, api_key)
-response = api.helloWorld("VolunteerMatch") # JSON {"name":"VolunteerMatch","result":"Hello VolunteerMatch!"}
+response = api.hello_world("VolunteerMatch") # JSON {"name":"VolunteerMatch","result":"Hello VolunteerMatch!"}
 puts response.name # "VolunteerMatch"
 puts response.result # "Hello VolunteerMatch!"
 
