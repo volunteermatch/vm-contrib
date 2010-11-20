@@ -33,7 +33,6 @@ class VolunteerMatchApi
     creation_time   = Time.now.utc.strftime("%Y-%m-%dT%H:%m:%S%z")
     password_digest = Base64.encode64(Digest::SHA2.digest(nonce + creation_time + @api_key)).chomp
     url             = URI.parse("http://www.volunteermatch.org/api/call?action=#{action.to_s}&query=" + URI.encode(json_query))
-puts url
 
     req             = Net::HTTP::Get.new(url.request_uri)
     req.add_field('Content-Type', 'application/json')
