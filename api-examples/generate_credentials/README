@@ -1,0 +1,10 @@
+A simple command line script to generate your API credentials to help debug issues with generating a nonce and digest.
+
+./generate_credentials.rb my_username c26b1f244feb1744c48bf998bae5f09a
+
+Example output
+
+Account Name:   my_username
+Nonce:          cb347820b1de3ac3eb01
+Digest:         3uscAsyNwbBQs3kAA9UX8laeuxF0vhtyxIwBcqNC1XY=
+Creation Time:  2010-11-20T18:11:00-0800

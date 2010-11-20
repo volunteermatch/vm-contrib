@@ -7,33 +7,22 @@
 		<link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">	
 		<!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
 		<script src="js/jquery-1.4.3.min.js"></script>
-		<script src="js/jquery.base64.min.js"></script>
-		<script src="js/jquery.sha256.min.js"></script>
+		<script src="js/jquery.class.js"></script>
 		<style>
 
 		</style>
 		<script type="text/javascript">
-			$(document).ready(function() {
+			$(document).ready(function() {				
 				$('#api-form input[type=submit]').click(function() {  
 				  var account_name = $('#api-form input#name').val();
 				  var key = $('#api-form input#key').val();
-				  var hello = $('#api-form input#hello').val();
-
-				  var req = new XMLHttpRequest();
-
-
 				  $.ajax({
-				   url: "http://www.volunteermatch.org/api/call?action=helloWorld&query=%7B%22name%22:%22VolunteerMatch%22%7D",
-				   dataType: 'json',
-				   beforeSend : function (xhr) {
-					        xhr.setRequestHeader('Content-Type','application/json');
-					        xhr.setRequestHeader('Accept-Charset',CHARSET);
-					        xhr.setRequestHeader('Authorization','WSSE profile="UsernameToken"');
-					        xhr.setRequestHeader('X-WSSE','UsernameToken Username="' + ACTOR + '", ' + 
-					                             'PasswordDigest="' + wsse.passwordDigest + '", ' +
-					                             'Nonce="' + wsse.nonce + '", Created="' + wsse.timestamp + '", ');
-				   },
-				   success: function(){alert('hi');}
+				    url: "http://www.volunteermatch.org/api/call?action=helloWorld&key=" + key + 
+				        "&query=%7B%22name%22:%22VolunteerMatch%22%7D",
+				    dataType: "jsonp",
+				    success: function(response){
+					    alert(response); 
+					},
 			 	  });
 			
 				  return false;
@@ -45,6 +34,9 @@
 	<body>
 		<div class="container">
 			<h1>VolunteerMatch API Test</h1>
+			<div class="error">
+				Currently the VolunteerMatch API v2 does not support JSONP with a callback, so Javascript is not an option
+			</div>
 			<form id="api-form">
 			 <fieldset>
 			  <legend>API Credentials</legend>
@@ -54,7 +46,7 @@
 			  <input type=text id=key name=key class="text"><br/>
 			  <label for=hello>Hello</label><br/>
 			  <input type=text id=hello name=hello value="World" class="text"><br/>
- 			  <input type="submit"/> 
+ 			  <input type="submit" onClick="return false"/> 
 			 </fieldset>
 			</form>
 			<div class="success" style="display:none">Results will appear here</div>
