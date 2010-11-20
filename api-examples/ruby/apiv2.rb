@@ -51,7 +51,3 @@ api = VolunteerMatchApi.new(account_name, api_key)
 response = api.hello_world("VolunteerMatch") # JSON {"name":"VolunteerMatch","result":"Hello VolunteerMatch!"}
 puts response.name # "VolunteerMatch"
 puts response.result # "Hello VolunteerMatch!"
-
-
-
-
