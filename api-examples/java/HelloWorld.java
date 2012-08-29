@@ -10,7 +10,7 @@ public class HelloWorld {
 
   private static final String HELLO_WORLD_METHOD = "helloWorld";
 
-  /** The first parameter to this program should be the name that will be displayed in the HelloWorld call
+  /** Usage : java org.vm.example.HelloWorld NameToDisplay ApiUsername ApiPassword
    *
    * @param args
    */
