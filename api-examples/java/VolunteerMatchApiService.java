@@ -1,7 +1,8 @@
 package org.vm.example;
 
+import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;
-import org.bouncycastle.util.encoders.Base64;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,11 +76,11 @@ public class VolunteerMatchApiService {
       return null;
     }
 
-    wsse.nonce = new String(Base64.encode(nonce));
+    wsse.nonce = Base64.encode(nonce);
     wsse.timestamp = DATETIME_FORMAT.format(new Date(System.currentTimeMillis()));
 
     String digestInput = wsse.nonce + wsse.timestamp + password;
-    wsse.passwordDigest = new String(Base64.encode(sha256((digestInput).getBytes())));
+    wsse.passwordDigest = Base64.encode(sha256((digestInput).getBytes()));
 
     return wsse;
   }
@@ -180,7 +181,7 @@ public class VolunteerMatchApiService {
       try {
         return "Code " + urlConnection.getResponseCode() + " : " + urlConnection.getResponseMessage();
       } catch (Exception e2) {
-        log.error("An unknown error occurred while processing an API call for method " + apiMethod + ", query "+ query, e2);
+        log.error("An unknown error occurred while processing an API call for method " + apiMethod + ", query " + query, e2);
       }
     }
 
