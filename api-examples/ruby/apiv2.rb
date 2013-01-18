@@ -30,7 +30,7 @@ class VolunteerMatchApi
 
   def call(action, json_query)
     nonce           = Digest::SHA2.hexdigest(rand.to_s)[0, 20]
-    creation_time   = Time.now.utc.strftime("%Y-%m-%dT%H:%m:%S%z")
+    creation_time   = Time.now.utc.strftime("%Y-%m-%dT%H:%M:%S%z")
     password_digest = Base64.encode64(Digest::SHA2.digest(nonce + creation_time + @api_key)).chomp
     url             = URI.parse("http://www.volunteermatch.org/api/call?action=#{action.to_s}&query=" + URI.encode(json_query))
 
