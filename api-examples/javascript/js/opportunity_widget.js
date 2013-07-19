@@ -23,7 +23,7 @@ jQuery.support.cors = true;
   $('#test_api_call').click(function () {
     $('#call_result').text("Loading...");
       $.ajax({
-          url: authenticationParameters["apiUrl"] + '/api/call',
+          url: self.location.hostname + '/api/call',
           data: {
               action: "searchOpportunities",
               query: JSON.stringify(testParameters)
