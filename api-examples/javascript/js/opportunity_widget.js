@@ -1,2 +1,2 @@
 /** placeholder */
-alert("Yay!");
+alert("Yay!!!");
