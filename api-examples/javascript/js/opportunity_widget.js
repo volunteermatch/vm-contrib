@@ -11,23 +11,16 @@ var testParameters = {
         "fieldsToDisplay": ["id", "title", "location", "plaintextDescription", "description"]
 };
 
-$(function () {
-  // metaData for the API Key/site
-  var metaData = null;
-  
-  // we will use CORS headers to facilitate certain cross-domain requests (from JSFiddle only)
-  jQuery.support.cors = true;
-  
-  $(function () {
-      $("#accordion").accordion({
-          fillSpace: true
-      });
-  });
-  
+// metaData for the API Key/site
+var metaData = null;
+
+// we will use CORS headers to facilitate certain cross-domain requests (from JSFiddle only)
+jQuery.support.cors = true;
+
   /** Begin Test API call submission code */
   
   /** submit the parameters/action to the API, using WSSE authentication token */
-  $('#test_api_call').submit(function () {
+  $('#test_api_call').click(function () {
     $('#call_result').text("Loading...");
       $.ajax({
           url: authenticationParameters["apiUrl"] + '/api/call',
@@ -82,5 +75,3 @@ $(function () {
       return false;
   });
   
-  /** end Test API call submission code */
-});
