@@ -18,7 +18,7 @@ var metaData = null;
 jQuery.support.cors = true;
 
 $(document).ready(function() {
-  $('#test_api_call').click(doApiCall);
+  doApiCall();
 });
   /** Begin Test API call submission code */
 
