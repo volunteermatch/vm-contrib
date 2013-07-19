@@ -1,23 +1,3 @@
-function loadScript(url) {
-  var scriptElement=document.createElement('script');
-  scriptElement.setAttribute("type","text/javascript");
-  scriptElement.setAttribute("src", url);
-  document.getElementsByTagName("head")[0].appendChild(scriptElement);
-}
-
-function loadCss(url) {
-  var cssElement=document.createElement('link');
-  cssElement.setAttribute("type","text/css");
-  cssElement.setAttribute("rel","stylesheet");
-  cssElement.setAttribute("src", url);
-  document.getElementsByTagName("head")[0].appendChild(cssElement);
-}
-
-loadScript("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
-loadScript("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js");
-loadScript("//www.nextrel.volunteermatch.org/include/js/lib/json2.min.js");
-loadCss("//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css");
-
 // authentication headers for API requests
 var authenticationHeaders = {
   "X-WSSE": wsseCredentials,
