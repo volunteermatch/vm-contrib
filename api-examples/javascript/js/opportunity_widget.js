@@ -10,7 +10,7 @@ function loadCss(url) {
   cssElement.setAttribute("type","text/css");
   cssElement.setAttribute("rel","stylesheet");
   cssElement.setAttribute("src", url);
-  document.getElementsByTagName("head")[0].appendChild(scriptElement);
+  document.getElementsByTagName("head")[0].appendChild(cssElement);
 }
 
 loadScript("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
