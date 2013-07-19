@@ -17,10 +17,13 @@ var metaData = null;
 // we will use CORS headers to facilitate certain cross-domain requests (from JSFiddle only)
 jQuery.support.cors = true;
 
+$(document).ready(function() {
+  $('#test_api_call').click(doApiCall);
+});
   /** Begin Test API call submission code */
-  
+
   /** submit the parameters/action to the API, using WSSE authentication token */
-  $('#test_api_call').click(function () {
+  function doApiCall () {
     $('#call_result').text("Loading...");
       $.ajax({
           url: self.location.hostname + '/api/call',
@@ -73,5 +76,5 @@ jQuery.support.cors = true;
       });
   
       return false;
-  });
+  };
   
