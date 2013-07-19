@@ -26,7 +26,7 @@ $(document).ready(function() {
   function doApiCall () {
     $('#call_result').text("Loading...");
       $.ajax({
-          url: self.location.hostname + '/api/call',
+          url: '/api/call',
           data: {
               action: "searchOpportunities",
               query: JSON.stringify(testParameters)
