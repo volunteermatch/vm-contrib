@@ -24,11 +24,6 @@ $(function () {
       });
   });
   
-  var form = $("<div>");
-  form.load("//raw.github.com/volunteermatch/vm-contrib/master/api-examples/javascript/js/opportunity_widget.html");
-  
-  $(body).append(form);
-  
   /** Begin Test API call submission code */
   
   /** submit the parameters/action to the API, using WSSE authentication token */
