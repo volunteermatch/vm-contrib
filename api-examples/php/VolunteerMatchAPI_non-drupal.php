@@ -1,7 +1,13 @@
 <?php
-ini_set('display_startup_errors',1);
-ini_set('display_errors',1);
-error_reporting(-1);
+
+  /** These options can be enabled for additional debugging:
+
+   ini_set('display_startup_errors',1);
+   ini_set('display_errors',1);
+   error_reporting(-1);
+
+   */
+
   /**
    * Sample code demonstrating use of VolunteerMatch API
    */
@@ -273,12 +279,15 @@ error_reporting(-1);
     }
   }
 
-VolunteerMatchAPI::init('http://odca.stage.volunteermatch.org/api/call',
-                                                        'a483313bf90678ae438c397171a5e00f',
-                                                        'odca_site_1');
- $api = new VolunteerMatchAPI();
+  throw new Exception('Please modify the "init" method, using the appropriate VolunteerMatch API URL, key and account name');
 
- $data = $api->testing();
- echo json_encode($data);
+  VolunteerMatchAPI::init('http://your_subdomain_here.volunteermatch.org/api/call',
+                          'abcdef123456789abcdef1234567890a',
+                          'your_account_name_here');
+  $api = new VolunteerMatchAPI();
+
+  $data = $api->testing();
+  
+  echo json_encode($data);
   
 ?>
