@@ -1,4 +1,3 @@
-package org.vm.example;
 
 import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;
@@ -21,12 +20,23 @@ import java.util.Date;
 /**
  */
 public class VolunteerMatchApiService {
+  private WSSECredentials wsse = null;
+  private String accountName;
   private static final Logger log = Logger.getLogger(VolunteerMatchApiService.class);
   private static final DateFormat DATETIME_FORMAT =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
   private static final String CHARSET = "UTF-8";
-  private static final String API_URL = "http://www.volunteermatch.org/api/call";
+  private static String apiUrl = "http://www.volunteermatch.org/api/call";
 
   public static final String HTTP_METHOD_GET = "GET";
+
+  public VolunteerMatchApiService() {
+  }
+
+  public VolunteerMatchApiService(String accountName, String password) {
+    wsse = buildWSSECredentials(accountName, password);
+    this.accountName = accountName;
+  }
+
   /**
    * Generate a random nonce.
    *
@@ -96,7 +106,7 @@ public class VolunteerMatchApiService {
   private HttpURLConnection buildConnection(WSSECredentials wsse, String query, String httpMethod, String accountName) {
     try {
 
-      URL url = new URL(API_URL + "?" + query);
+      URL url = new URL(apiUrl + "?" + query);
 
       HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
       urlConnection.setRequestMethod(httpMethod);
@@ -141,16 +151,39 @@ public class VolunteerMatchApiService {
    * @return
    */
   public String callAPI(String apiMethod, String query, String httpMethod, String accountName, String password) {
+    HttpURLConnection urlConnection = null;
+    try {
+      this.accountName = accountName;
+      wsse = buildWSSECredentials(accountName, password);
+    } catch (Exception e) {
+      try {
+        return "Code " + urlConnection.getResponseCode() + " : " + urlConnection.getResponseMessage();
+      } catch (Exception e2) {
+        log.error("An unknown error occurred while processing an API call for method " + apiMethod + ", query " + query, e2);
+        return null;
+      }
+    }
+    return callAPI(apiUrl, apiMethod, query, httpMethod);
+  }
+
+  /** Call the VolunteerMatch API for the specified method (
+   *
+   * @param url
+   * @param apiMethod
+   * @param query
+   * @param httpMethod
+   * @return
+   */
+  public String callAPI(String url, String apiMethod, String query, String httpMethod) {
     StringBuilder q = new StringBuilder();
     HttpURLConnection urlConnection = null;
     InputStream response = null;
+
+    apiUrl = url;
     try {
       q.append("action=").append(URLEncoder.encode(apiMethod, CHARSET));
       q.append("&query=").append(URLEncoder.encode(query, CHARSET));
 
-      WSSECredentials wsse = null;
-
-      wsse = buildWSSECredentials(accountName, password);
 
       urlConnection = buildConnection(wsse, q.toString(), httpMethod, accountName);
 
