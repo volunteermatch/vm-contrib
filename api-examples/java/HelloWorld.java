@@ -1,4 +1,3 @@
-package org.vm.example;
 
 import org.apache.log4j.Logger;
 
