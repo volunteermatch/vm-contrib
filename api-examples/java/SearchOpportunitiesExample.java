@@ -63,7 +63,8 @@ public class SearchOpportunitiesExample {
 
 
   static void searchOpps(String updatedSince, int maxDisplay) {
-    VolunteerMatchApiService service = new VolunteerMatchApiService(user, key);
+    VolunteerMatchApiService service = new VolunteerMatchApiService();
+    service.setApiUrl(url); // this call is really only needed if you want use the stage server
     OppSearchResult statusResult = null;
     String result = null;
     int displayCount = 1;
@@ -74,7 +75,7 @@ public class SearchOpportunitiesExample {
       String searchOppsQuery = buildSearchOppsQuery(pageNumber, updatedSince);
       System.out.println("Search Query:");
       System.out.println(searchOppsQuery);
-      result = service.callAPI(url, SEARCH_OPPORTUNITIES, searchOppsQuery, "POST");
+      result = service.callAPI(SEARCH_OPPORTUNITIES, searchOppsQuery, "POST", user, key);
       if (result == null) {
         System.out.println("Error - failed to make API call");
         System.exit(16);

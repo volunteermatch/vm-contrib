@@ -166,7 +166,11 @@ public class VolunteerMatchApiService {
     return callAPI(apiUrl, apiMethod, query, httpMethod);
   }
 
-  /** Call the VolunteerMatch API for the specified method (
+  /** Call the VolunteerMatch API for the specified method
+   * If calling this method directly from your application you must use the constructor with credentials
+   * and be aware that the credentials will time out after some set time. The advantage is better performance
+   * since we don't need to rebuild the security header so if you know you will be doing multiple back to back
+   * API calls you may consider using this method.
    *
    * @param url
    * @param apiMethod
@@ -179,6 +183,10 @@ public class VolunteerMatchApiService {
     HttpURLConnection urlConnection = null;
     InputStream response = null;
 
+    if(wsse == null) {
+      log.error("Error no credentials, this method should only be called directly if the constructor with credentials was used.");
+      return null;
+    }
     apiUrl = url;
     try {
       q.append("action=").append(URLEncoder.encode(apiMethod, CHARSET));
@@ -219,6 +227,10 @@ public class VolunteerMatchApiService {
     }
 
     return null;
+  }
+
+  public void setApiUrl(String url) {
+    apiUrl = url;
   }
 
   /**
