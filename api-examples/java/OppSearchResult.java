@@ -6,7 +6,7 @@ import java.util.*;
  * used to take the JSON string returned from the call and represent it as Java objects.
  *
  * Limitations: Currently not all possible fields are represented here. Only the ones currently needed
- * by the simple OppSearchExample example.
+ * by the simple SearchOpportunitiesExample example.
  *
  * Created by jrackwitz on 12/3/15.
  */
@@ -56,6 +56,15 @@ public class OppSearchResult {
     private Integer id;
     private String title;
     private String updated;
+    private String status;
+
+    public String getStatus() {
+      return status;
+    }
+
+    public void setStatus(String status) {
+      this.status = status;
+    }
 
     public String getUpdated() {
       return updated;

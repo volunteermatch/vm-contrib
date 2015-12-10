@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * converted to a JSON string and then passed as input to the API call.
  *
  * Limitations: Currently not all possible fields are represented here. Only the ones currently needed
- * by the simple OppSearchExample example.
+ * by the simple SearchOpportunitiesExample example.
  *
  * Created by jrackwitz on 12/3/15.
  */
@@ -18,6 +18,15 @@ public class OppSearchQuery {
   private String sortOrder;
   private String sortCriteria;
   private String updatedSince;
+  private boolean includeInactive;
+
+  public boolean isIncludeInactive() {
+    return includeInactive;
+  }
+
+  public void setIncludeInactive(boolean includeInactive) {
+    this.includeInactive = includeInactive;
+  }
 
   public String getUpdatedSince() {
     return updatedSince;

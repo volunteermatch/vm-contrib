@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * Created by jrackwitz on 12/3/15.
  */
-public class OppSearchExample {
+public class SearchOpportunitiesExample {
   private static final String SEARCH_OPPORTUNITIES = "searchOpportunities";
 
   private static String url="http://www.stage.volunteermatch.org/api/call";
@@ -28,7 +28,7 @@ public class OppSearchExample {
   private static int displayCount = 3;
   private static String updatedSince = "2015-04-05T00:00:00Z";
 
-  /** Usage : java OppSearchExample ? - will show usage
+  /** Usage : java SearchOpportunitiesExample ? - will show usage
    *
    * @param args
    */
@@ -97,6 +97,7 @@ public class OppSearchExample {
           System.out.println("     Id: " + opp.getId());
           System.out.println("  Title: " + opp.getTitle());
           System.out.println("Updated: " + opp.getUpdated());
+          System.out.println(" Active: " + opp.getStatus());
           System.out.println();
           if (displayCount++ == maxDisplay) {
             break;
@@ -119,6 +120,7 @@ public class OppSearchExample {
     dr.setEndDate("2015-12-31");
     if(updatedSince != null && updatedSince.length() > 0) {
       oq.setUpdatedSince(updatedSince);
+      oq.setIncludeInactive(true);
     }
     dateRanges.add(dr);
     dr = new OppSearchQuery.DateRange();
@@ -132,6 +134,7 @@ public class OppSearchExample {
     displayFields.add("id");
     displayFields.add("title");
     displayFields.add("updated");
+    displayFields.add("status");
     oq.setFieldsToDisplay(displayFields);
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(oq);
