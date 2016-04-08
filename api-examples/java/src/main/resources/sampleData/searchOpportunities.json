@@ -1,0 +1,12 @@
+{
+  "location": "san francisco",
+  "virtual": false,
+  "radius": "city",
+  "fieldsToDisplay": [
+    "id",
+    "title",
+    "updated",
+    "status",
+    "requirements"
+  ]
+}

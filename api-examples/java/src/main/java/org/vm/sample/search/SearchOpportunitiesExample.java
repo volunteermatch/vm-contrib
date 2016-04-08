@@ -1,3 +1,4 @@
+package org.vm.sample.search;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,7 +34,7 @@ public class SearchOpportunitiesExample {
    * @param args
    */
   public static void main(String[] args) {
-
+    System.out.println("Hi ......");
     for(int i=0; i < args.length; i++) {
       if (args[i].startsWith("url=")) {
         url = args[i].substring(args[i].indexOf("=") + 1);
@@ -63,7 +64,7 @@ public class SearchOpportunitiesExample {
 
 
   static void searchOpps(String updatedSince, int maxDisplay) {
-    VolunteerMatchApiService service = new VolunteerMatchApiService();
+    org.vm.sample.VolunteerMatchApiService service = new org.vm.sample.VolunteerMatchApiService();
     service.setApiUrl(url); // this call is really only needed if you want use the stage server
     OppSearchResult statusResult = null;
     String result = null;
@@ -75,7 +76,7 @@ public class SearchOpportunitiesExample {
       String searchOppsQuery = buildSearchOppsQuery(pageNumber, updatedSince);
       System.out.println("Search Query:");
       System.out.println(searchOppsQuery);
-      result = service.callAPI(SEARCH_OPPORTUNITIES, searchOppsQuery, "POST", user, key);
+      result = service.callAPI(SEARCH_OPPORTUNITIES, searchOppsQuery, "GET", user, key);
       if (result == null) {
         System.out.println("Error - failed to make API call");
         System.exit(16);
@@ -111,20 +112,20 @@ public class SearchOpportunitiesExample {
   }
 
   static String buildSearchOppsQuery(int pageNumber, String updatedSince) {
-    OppSearchQuery oq = new OppSearchQuery();
+    org.vm.sample.search.OppSearchQuery oq = new org.vm.sample.search.OppSearchQuery();
     oq.setLocation("san francisco");
     oq.setRadius("city");
-    ArrayList<OppSearchQuery.DateRange> dateRanges = new ArrayList<>();
-    OppSearchQuery.DateRange dr = new OppSearchQuery.DateRange();
+    ArrayList<org.vm.sample.search.OppSearchQuery.DateRange> dateRanges = new ArrayList<>();
+    org.vm.sample.search.OppSearchQuery.DateRange dr = new org.vm.sample.search.OppSearchQuery.DateRange();
     dr.setSingleDayOpps(true);
     dr.setStartDate("2015-01-01");
     dr.setEndDate("2015-12-31");
     if(updatedSince != null && updatedSince.length() > 0) {
       oq.setUpdatedSince(updatedSince);
-      oq.setIncludeInactive(true);
+      //oq.setIncludeInactive(true);
     }
     dateRanges.add(dr);
-    dr = new OppSearchQuery.DateRange();
+    dr = new org.vm.sample.search.OppSearchQuery.DateRange();
     dr.setOngoing(true);
     dateRanges.add(dr);
     oq.setDateRanges(dateRanges);

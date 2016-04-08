@@ -1,0 +1,15 @@
+{
+  "members" : [
+    {
+      "email" : "john.doe7@acme.com" ,
+      "firstName" : "Tim",
+      "lastName" : "Doe",
+      "location" : {
+        "postalCode" : "94108",
+        "country" : "us"
+      } ,
+      "phoneNumber" : "4151234567",
+      "acceptsTermsOfUse" : true
+    }
+  ]
+}

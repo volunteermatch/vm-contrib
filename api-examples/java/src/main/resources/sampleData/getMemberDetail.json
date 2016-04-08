@@ -1,0 +1,4 @@
+{
+  "primaryKey" : "john.doe1@acme.com",
+  "fieldsToDisplay" : ["email","primaryKey","firstName","location"]
+}

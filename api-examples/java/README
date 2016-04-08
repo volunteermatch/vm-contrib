@@ -1,0 +1,85 @@
+This is Java sample code for VolunteerMatch Rest API v2.
+
+1. Project folder structure
+
+project_base_folder
+       |--lib (all the required libraries files and the project generated jar file)
+       |--resources (the home for the sample input files)
+       |--src
+           |--main
+               |--java
+               |--resources
+                      |--bin (shell scripts to run the project in command line)
+                      |--lib (jar files for ant build)
+                      |--sampleData (sample input data file in json format)
+       |--build.xml (ant build file)
+       |--pom.xml
+       |--README
+
+
+2. Project development enviroment
+   java - jdk 1.7.0_80. http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+   maven - Apache Maven 3.3.9. https://maven.apache.org/download.cgi
+   ant  - Apache Ant 1.9.4.
+
+3. how to build the project
+   The project follows maven project conventions. It can be built using either Maven or Ant. The compiled class files
+   is packaged to a jar file located at ${project_base_folder}/target/API-samples-1.0-SNAPSHOT.jar.
+
+   Command to build in maven:
+           mvn clean install
+
+   Command to build in ant:
+           ant clean build-jar
+
+4. Sample data
+   Four sample data files are provided. The names of the files are aligned with the API method names. For example,
+   file with name createOrUpdateMembers.json contains the sample json data for method createOrUpdateMembers.
+
+
+
+
+5. Parameters
+
+ The java file contains the main method is APIController.java. It requires 6 parameters. The format of the parameters
+ is key=value. The project accepts the six paramters in any order.
+
+ Parameter url is the url for the APi call. VolunteerMatch has staging and production env open to the public. The staging
+ url is http://www.stage.volunteermatch.org/api/call. The production url is http://www.volunteermatch.org/api/call.
+ This paramter should be used if the staging url is preferred, url=http://www.stage.volunteermatch.org/api/call
+
+ Parameter key is the access key which VolunteerMatch generated for a particualr user.
+ Parameter user is the user/account name for which the key was generated for.
+ Parameter dataFile is the json data file. The recommandation is to use the full path of the file.
+ Parameter operation=API action like searchOpportunities
+ Parameter apiMethod=GET or POST
+
+ 6. How to run the project
+
+  To run the project, a enviroment variable is set for java classpath.
+  run the following command in a terminal
+
+  $export CP={project_base_folder}/src/main/resources/lib/axis.jar:{project_base_folder}/src/main/resources/lib/jackson-all-1.9.9.jar:\
+ {project_base_folder}/src/main/resources/lib/log4j-1.2.16.jar:{project_base_folder}/src/main/resources/lib/gson-2.1.jar:\
+ {project_base_folder}/target/API-samples-1.0-SNAPSHOT.jar
+ $java -cp $CP org.vm.sample.APIController url=http://www.stage.volunteermatch.org/api/call \
+   user=xxxxxxx key=xxxxxxx dataFile={project_base_folder}/src/main/resources/sampleData/createOrUpdateReferrals.json \
+   operation=createOrUpdateReferrals apiMethod=POST
+
+ 7. How to run a complete sample of searchOpportunities
+
+  $cd {project_base_folder}/src/main/resources/bin
+
+  Replace the place holder strings in SearchOpportunitiesExample_BuildAndRun.sh with your user name and key. Then run the script.
+
+  $./SearchOpportunitiesExample_BuildAndRun.sh
+
+
+
+
+
+
+
+
+
+

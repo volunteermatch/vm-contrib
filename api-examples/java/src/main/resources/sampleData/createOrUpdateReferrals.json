@@ -1,0 +1,25 @@
+
+{
+  "oppId" : 785275,
+  "referrals" : [
+    {
+      "member" : { "primaryKey" : "john.doe7@acme.com" },
+      "commitmentStartDate" : "2017-01-28",
+      "commitmentEndDate" : "2017-02-28",
+      "referralFields" : [
+        {
+          "id" : "20033",
+          "values" : [ "1 Main St., Old Town CA 00000" ]
+        },
+        {
+          "id" : "18029",
+          "values" : [ "newspaper" ]
+        },
+        {
+          "id" : "18027",
+          "values" : [ "no" ]
+        }
+      ]
+    }
+  ]
+}

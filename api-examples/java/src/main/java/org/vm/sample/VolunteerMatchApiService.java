@@ -1,3 +1,4 @@
+package org.vm.sample;
 
 import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;

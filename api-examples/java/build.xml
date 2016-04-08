@@ -1,0 +1,32 @@
+<project default="compile">
+  <property name="base.dir" location="./"/>
+  <property name="src.dir" location="./src"/>
+  <property name="src.dir.java" value="${src.dir}/main/java"/>
+  <property name="src.dir.lib" value="src/main/resources/lib"/>
+  <property name="target.dir" value="target/classes"/>
+  <path id="build.classpath">
+    <fileset dir="src/main/resources/lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="compile">
+    <mkdir dir="${target.dir}"/>
+    <javac srcdir="${src.dir.java}" destdir="${target.dir}">
+      <classpath refid="build.classpath"/>
+    </javac>
+  </target>
+  <target name="build-jar" description="Builds a jar" depends="compile">
+    <jar destfile="${target.dir}/../API-samples-1.0-SNAPSHOT.jar" basedir="${target.dir}">
+     <!-- <manifest>
+        <attribute name="Main-Class" value="org.vm.sample.APIController"/>
+        <attribute name="Class-Path" value="${base.dir}/${src.dir.lib}"/>
+      </manifest>
+      <fileset dir="${src.dir.lib}"/>
+      -->
+    </jar>
+  </target>
+  <target name="clean" description="clean out target directory">
+    <delete quiet="true" includeEmptyDirs="true" failonerror="false" dir="${target.dir}/../"/>
+  </target>
+</project>
