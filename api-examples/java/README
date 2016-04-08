@@ -23,8 +23,7 @@ project_base_folder
    ant  - Apache Ant 1.9.4.
 
 3. how to build the project
-   The project follows maven project conventions. It can be built using either Maven or Ant. The compiled class files
-   is packaged to a jar file located at ${project_base_folder}/target/API-samples-1.0-SNAPSHOT.jar.
+   The project follows maven project conventions. It can be built using either Maven or Ant. The compiled class files packaged to a jar file located at ${project_base_folder}/target/API-samples-1.0-SNAPSHOT.jar.
 
    Command to build in maven:
            mvn clean install
@@ -33,8 +32,7 @@ project_base_folder
            ant clean build-jar
 
 4. Sample data
-   Four sample data files are provided. The names of the files are aligned with the API method names. For example,
-   file with name createOrUpdateMembers.json contains the sample json data for method createOrUpdateMembers.
+   Four sample data files are provided. The names of the files are aligned with the API method names. For example,file with name createOrUpdateMembers.json contains the sample json data for method createOrUpdateMembers.
    createOrUpdateMembers   -- src/main/resources/sampleData/createOrUpdateMembers.json
    createOrupdateReferrals -- src/main/resources/sampleData/createOrUpdateReferrals.json
    getMembberDetail        -- src/main/resources/sampleData/getMemberDetail.json
@@ -44,8 +42,7 @@ project_base_folder
 
 5. Parameters
 
- The java file contains the main method is APIController.java. It requires 6 parameters. The format of the parameters
- is key=value. The project accepts the six paramters in any order.
+ The java file contains the main method is APIController.java. It requires 6 parameters. The format of the parameters is key=value. The project accepts the six paramters in any order.
 
  Parameter url is the url for the APi call. VolunteerMatch has staging and production env open to the public. The staging
  url is http://www.stage.volunteermatch.org/api/call. The production url is http://www.volunteermatch.org/api/call.
