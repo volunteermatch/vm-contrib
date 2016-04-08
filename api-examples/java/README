@@ -35,7 +35,10 @@ project_base_folder
 4. Sample data
    Four sample data files are provided. The names of the files are aligned with the API method names. For example,
    file with name createOrUpdateMembers.json contains the sample json data for method createOrUpdateMembers.
-
+   createOrUpdateMembers   -- src/main/resources/sampleData/createOrUpdateMembers.json
+   createOrupdateReferrals -- src/main/resources/sampleData/createOrUpdateReferrals.json
+   getMembberDetail        -- src/main/resources/sampleData/getMemberDetail.json
+   searchOpportunites      -- src/main/resources/sampleData/searchOpportunities
 
 
 
