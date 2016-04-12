@@ -3,9 +3,7 @@
   "oppId" : 785275,
   "referrals" : [
     {
-      "member" : { "primaryKey" : "john.doe7@acme.com" },
-      "commitmentStartDate" : "2017-01-28",
-      "commitmentEndDate" : "2017-02-28",
+      "member" : { "primaryKey" : "john.doe8@acme.com" },
       "referralFields" : [
         {
           "id" : "20033",
