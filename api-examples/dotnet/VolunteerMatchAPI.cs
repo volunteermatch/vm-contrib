@@ -9,7 +9,7 @@ namespace ConsoleApplication
     {
 
         static bool isProduction = false;
-        static String volunteerMatchAPIUrl = isProduction ? "https://api.volunteermatch.org/api/call" : "http://api.stage.volunteermatch.org/api/call";
+        static String volunteerMatchAPIUrl = isProduction ? "https://www.volunteermatch.org/api/call" : "http://www.stage.volunteermatch.org/api/call";
         static String apiKey = isProduction ? "enter production key here" : "enter stage key here";
         static String apiUsername = "your username";
 
