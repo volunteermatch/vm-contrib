@@ -37,7 +37,7 @@
       self::$username = $vmUsername;
     }
 
-    public function sendRequest($action, $query, $type = 'GET') {
+    public function sendRequest($action, $query = NULL, $type = 'GET') {
       $result = "";
 
       $request_url = self::$path . '?action=' . $action;
