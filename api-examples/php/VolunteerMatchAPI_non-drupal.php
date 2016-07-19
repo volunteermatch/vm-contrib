@@ -277,6 +277,12 @@
     public function getLastResponse($display = 'opp summary') {
       return self::displayResponse($display);
     }
+    
+    // service status
+    public function getServiceStatus() {
+        self::sendRequest('getServiceStatus');
+        return self::displayResponse();
+    }
   }
 
   throw new Exception('Please modify the "init" method, using the appropriate VolunteerMatch API URL, key and account name');
