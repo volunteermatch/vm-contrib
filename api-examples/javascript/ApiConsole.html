@@ -1,0 +1,150 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>API Console &bull; Volunteer Match API</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+<body>
+
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col">
+                <div class="bg-light border rounded p-3">
+                    <form class="form-request">
+                        <div class="form-group">
+                            <label>API Key</label>
+                            <input type="text" class="form-control form-control-api-key is-invalid" placeholder="Enter Volunteer Match API Key here..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control form-control-username is-invalid" placeholder="Enter Volunteer Match API Username here..." />
+                        </div>
+                        <div class="form-group">
+                            <label>Action</label>
+                            <input type="text" class="form-control form-control-action" placeholder="Enter API Action here..." value="helloWorld" />
+                        </div>
+                        <div class="form-group">
+                            <label>Method</label>
+                            <select class="form-control form-control-method">
+                                <option>GET</option>
+                                <option>POST</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Query</label>
+                            <textarea class="form-control form-control-query" rows="5">{"name": "john"}</textarea>
+                        </div>
+                        <button class="btn btn-block btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <textarea class="form-control form-control-response h-100"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+
+        // Whenever the query textarea changes, try to lint its contents
+        $('.form-control-query').change(function () {
+            // Remove the red border from the textarea if there is one
+            $(this).removeClass('is-invalid');
+
+            // Only try to lint the json if there is any
+            if ($(this).val().trim() != '') {
+                try {
+                    // Parse and then stringify the JSON to lint it
+                    $(this).val(JSON.stringify(JSON.parse($(this).val()), undefined, 4));
+                } catch {
+                    // If there's an error, add a red border to the textarea
+                    $(this).addClass('is-invalid');
+                }
+            }
+        }).change();
+        // Fire this event handler on page load
+
+        // When any of the input form controls are changed (not the textareas),
+        // add or remove a red border to indicate that they are required
+        $('input.form-control').change(function () {
+            if ($(this).val().trim() != '') {
+                $(this).removeClass('is-invalid');
+            } else {
+                $(this).addClass('is-invalid');
+            }
+        });
+
+        // When the request form is submitted
+        $('.form-request').submit(function () {
+
+            // Try to call the API
+            try {
+
+                // Grab the API credentials from the form inputs
+                // Also generate a timestamp using Moment.js,
+                // create a nonce using getRandomAlphanumericString from below,
+                // and create the password digest by combining the nonce, timestamp and api key and SHA256 encrypting them all using CryptoJS  
+                var apiKey = $('.form-control-api-key').val(),
+                    username = $('.form-control-username').val(),
+                    action = $('.form-control-action').val(),
+                    method = $('.form-control-method').val(),
+                    query = $('.form-control-query').val(),
+                    queryJson = query ? JSON.parse(query) : { },
+                    created = moment().format("YYYY-MM-DDTHH:mm:ssZZ"),
+                    nonce = getRandomAlphanumericString(5, ''),
+                    passwordDigest = CryptoJS.enc.Base64.stringify(CryptoJS.SHA256(nonce + created + apiKey));
+
+                // Use jquery ajax to call the API
+                $.ajax({
+                    url: 'https://www.volunteermatch.org/api/call', // Base VolunteerMatch API URL
+                    method: method,
+                    data: {
+                        action: action,
+                        query: JSON.stringify(queryJson) // Stringify the query JSON
+                    },
+                    headers: { // Set the headers for WSSE authentication using the username, password digest, nonce, and timestamp
+                        'Authorization': 'WSSE profile="UsernameToken"',
+                        'X-WSSE': 'UsernameToken Username="' + username + '", PasswordDigest="' + passwordDigest + '", Nonce="' + nonce + '", Created="' + created + '"',
+                    },
+                    success: function (response) {
+                        // On success print to the response textarea
+                        // Also lint response JSON
+                        $('.form-control-response').val(JSON.stringify(response, undefined, 4));
+                    },
+                    error: function (jqxhr, status, error) {
+                        // On success print to the response textarea
+                        $('.form-control-response').val(error);
+                    },
+                });
+
+            } catch (error) {
+                // If an error is encountered, print the error message in the response textarea
+                $('.form-control-response').val(error);
+            }
+
+            // Prevent default form behavior
+            return false;
+        });
+
+        // Generates a random alphanumeric string using recursion
+        function getRandomAlphanumericString(length, string) {
+            // String of possible choices
+            var possibleCharacters = 'abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ09123456789';
+
+            // Randomly add one of the possible characters to the string
+            string += possibleCharacters.substr(Math.floor(Math.random() * possibleCharacters.length), 1);
+
+            // If we've met the desired length, return the string
+            // Else recursively call the same function to add another character, decrementing the length flag
+            return length == 1 ? string : getRandomAlphanumericString(length - 1, string);
+        }
+
+    </script>
+
+</body>
+</html>

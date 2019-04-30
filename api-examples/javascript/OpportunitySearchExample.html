@@ -1,0 +1,177 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Opportunity Search Example &bull; Volunteer Match API</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <style>
+        .card-columns {
+            column-count: 4;
+        }
+
+        @media (max-width: 1200px) {
+            .card-columns {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .card-columns {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-columns {
+                column-count: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container pt-5">
+        <form class="bg-light rounded p-4">
+            <div class="form-row">
+                <div class="col-lg-3 col-md-6">
+                    <label>Location</label>
+                    <input type="search" name="location" class="form-control" placeholder="Your city and region" required />
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label>Keywords</label>
+                    <input type="search" name="keywords" class="form-control" placeholder="Optional filter" />
+                </div>
+                <div class="col-lg-3 col-md-6 pt-4 text-center">
+                    <label class="text-left align-middle">
+                        <input type="checkbox" name="virtual" class="position-relative" style="width: 20px; height: 20px; bottom: 5px;" />
+                        <span class="d-inline-block">Show Virtual<br />Opportunities</span>
+                    </label>
+                </div>
+                <div class="col-lg-3 col-md-6 pt-4">
+                    <button class="btn btn-block btn-primary">Find Opportunities</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="card-columns mt-3"></div>
+    </div>
+
+    <script type="text/template" class="result-template d-none">
+        <div class="card bg-light border-0 mb-4">
+            <a href="{{vmUrl}}" target="_blank">{{image}}</a>
+            <div class="card-body">
+                <a href="{{vmUrl}}" target="_blank"><h5 class="card-title mb-0">{{title}}</h5></a>
+                <span class="h6 card-subtitle mt-1 text-muted">with <a href="https://www.volunteermatch.org/search/org{{parentOrgId}}.jsp" target="_blank">{{parentOrgName}}</a></span>
+                <span class="badge badge-primary d-block text-uppercase mt-2">{{availability}}</span>
+                <div class="card-text mt-2">{{description}}</div>
+                <div class="small text-center mt-3"><table class="w-100"><tr><td class="p-1">{{categories}}</td></tr></table></div>
+                <div class="text-center mt-2"><span class="badge badge-dark m-1">{{greatfor}}</span></div>
+                <div class="text-center text-uppercase small text-muted mt-3">{{location}}</div>
+            </div>
+        </div>
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+
+        // Init an empty meta data object to be filled in below
+        var metaData = {};
+
+        // Call the API action to get the meta data needed to display category names
+        apiCall({
+            action: 'getMetaData'
+        }, function (response) {
+            metaData = response;
+        });
+
+        // When the request form is submitted
+        $('form').submit(function () {
+
+            // Call the API action for searching opportunities using the options entered on the form
+            apiCall({
+                action: 'searchOpportunities', // Hard-coded API action
+                query: JSON.stringify({ // Stringify the query JSON assembled from the form values
+                    virtual: $('input[name="virtual"]', this).is(':checked'),
+                    location: $('input[name="location"]', this).val(),
+                    keywords: $('input[name="keywords"]', this).val().split(' ')
+                })
+            }, function (response) {
+                // For each response, make a copy of the template and replace all of the palceholders with corresponding data
+                $.each(response.opportunities, function (opportunityIndex, opportunity) {
+                    $('.card-columns').append(
+                        $('.result-template').html()
+                            .replace('{{image}}', opportunity.imageUrl != null ? '<img class="card-img-top" src="' + decodeURIComponent(opportunity.imageUrl) + '" />' : '')
+                            .replace('{{vmUrl}}', decodeURIComponent(opportunity.vmUrl))
+                            .replace('{{vmUrl}}', decodeURIComponent(opportunity.vmUrl))
+                            .replace('{{title}}', opportunity.title)
+                            .replace('{{parentOrgId}}', opportunity.parentOrg.id)
+                            .replace('{{parentOrgName}}', opportunity.parentOrg.name)
+                            .replace('{{availability}}', (opportunity.availability.ongoing ? 'Flexible Schedule' : (opportunity.availability.singleDayOpportunity ? moment(opportunity.availability.startDate).format('MMM Do, YYYY') : moment(opportunity.availability.startDate).format('MMM Do, YY') + ' - ' + moment(opportunity.availability.endDate).format('MMM Do, YY'))))
+                            .replace('{{description}}', opportunity.plaintextDescription.substr(0, 200).split(' ').slice(0, -1).join(' ') + '&hellip;')
+                            .replace('{{categories}}', opportunity.categoryIds.map(function (categoryId) { return metaData.categories.filter(function (category) { return category.id == categoryId; })[0].name; }).join('</td><td class="p-1 border-left">'))
+                            .replace('{{greatfor}}', opportunity.greatFor.map(function (code) { return 'Great for ' + code.replace('s', '55+').replace('t', 'teens').replace('k', 'kids').replace('g', 'groups'); }).join('</span><span class="badge badge-dark border mr-1">'))
+                            .replace('{{location}}', opportunity.virtual ? 'Virtual Opportunity' : opportunity.location.city + ', ' + opportunity.location.region)
+                    );
+                });
+            });
+
+            return false;
+        });
+
+        // Enable/disable the location input based on the virtual checkbox
+        $('form [name="virtual"]').change(function () {
+            if ($(this).is(':checked')) {
+                $('form input[name="location"]').attr('disabled', 'disabled');
+            } else {
+                $('form input[name="location"]').removeAttr('disabled');
+            }
+        });
+
+        // Helper function for making API calls
+        function apiCall(data, success, error) {
+
+            // Enter your api key and username here
+            // Generate a timestamp using Moment.js, create a nonce using getRandomAlphanumericString from below,
+            // and create the password digest by combining the nonce, timestamp and api key and SHA256 encrypting them all using CryptoJS
+            var apiKey = 'XXXXXXXXXX',
+                username = 'XXXXXXXXXX',
+                created = moment().format("YYYY-MM-DDTHH:mm:ssZZ"),
+                nonce = getRandomAlphanumericString(5, ''),
+                passwordDigest = CryptoJS.enc.Base64.stringify(CryptoJS.SHA256(nonce + created + apiKey));
+
+            // Use jquery ajax to call the API
+            $.ajax({
+                url: 'https://www.volunteermatch.org/api/call', // Base VolunteerMatch API URL
+                data: data, // Pass in the data provided to the helper function
+                headers: { // Set the headers for WSSE authentication using the username, password digest, nonce, and timestamp
+                    'Authorization': 'WSSE profile="UsernameToken"',
+                    'X-WSSE': 'UsernameToken Username="' + username + '", PasswordDigest="' + passwordDigest + '", Nonce="' + nonce + '", Created="' + created + '"',
+                },
+                success: success, // on success trigger the provided success callback
+                error: function (jqxhr, status, error) {
+                    // On success print the error message to the client console
+                    console.log(error);
+                },
+            });
+        }
+
+        // Generates a random alphanumeric string using recursion
+        function getRandomAlphanumericString(length, string) {
+            // String of possible choices
+            var possibleCharacters = 'abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ09123456789';
+
+            // Randomly add one of the possible characters to the string
+            string += possibleCharacters.substr(Math.floor(Math.random() * possibleCharacters.length), 1);
+
+            // If we've met the desired length, return the string
+            // Else recursively call the same function to add another character, decrementing the length flag
+            return length == 1 ? string : getRandomAlphanumericString(length - 1, string);
+        }
+
+    </script>
+
+</body>
+</html>
