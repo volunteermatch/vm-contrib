@@ -1,1 +1,0 @@
-The VolunteerMatch API v2 does NOT support JSONP, so client side Javascript is not an option. This is a placeholder for if/when VolunteerMatch adds JSONP support.

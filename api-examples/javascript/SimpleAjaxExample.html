@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple AJAX Example &bull; Volunteer Match API</title>
+</head>
+<body>
+
+    Check the client console for API response
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+
+        // Enter your api key and username here
+        // Generate a timestamp using Moment.js, create a nonce using getRandomAlphanumericString from below,
+        // and create the password digest by combining the nonce, timestamp and api key and SHA256 encrypting them all using CryptoJS
+        var apiKey = 'XXXXXXXXXX',
+            username = 'XXXXXXXXXX',
+            created = moment().format("YYYY-MM-DDTHH:mm:ssZZ"),
+            nonce = getRandomAlphanumericString(5, ''),
+            passwordDigest = CryptoJS.enc.Base64.stringify(CryptoJS.SHA256(nonce + created + apiKey));
+
+        // Use jquery ajax to call the API
+        // Hit the searchOpportunites action and only return virtual opportunities
+        $.ajax({
+            url: 'https://www.volunteermatch.org/api/call', // Base VolunteerMatch API URL
+            data: {
+                action: 'searchOpportunities', // Hard-coded API action
+                query: JSON.stringify({ // Stringify the Hard-coded query JSON
+                    virtual: true
+                })
+            },
+            headers: { // Set the headers for WSSE authentication using the username, password digest, nonce, and timestamp
+                'Authorization': 'WSSE profile="UsernameToken"',
+                'X-WSSE': 'UsernameToken Username="' + username + '", PasswordDigest="' + passwordDigest + '", Nonce="' + nonce + '", Created="' + created + '"',
+            },
+            success: function (response) {
+                // On success print the response to the client console
+                console.log(response);
+            },
+            error: function (jqxhr, status, error) {
+                // On success print the error message to the client console
+                console.log(error);
+            },
+        });
+
+        // Generates a random alphanumeric string using recursion
+        function getRandomAlphanumericString(length, string) {
+            // String of possible choices
+            var possibleCharacters = 'abcdefghijklmnopqrstuvqxyzABCDEFGHIJKLMNOPQRSTUVWXYZ09123456789';
+
+            // Randomly add one of the possible characters to the string
+            string += possibleCharacters.substr(Math.floor(Math.random() * possibleCharacters.length), 1);
+
+            // If we've met the desired length, return the string
+            // Else recursively call the same function to add another character, decrementing the length flag
+            return length == 1 ? string : getRandomAlphanumericString(length - 1, string);
+        }
+
+    </script>
+
+</body>
+</html>
