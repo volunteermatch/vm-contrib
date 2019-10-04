@@ -1,4 +1,0 @@
-; $Id$
-name = VolunteerMatch Module
-description = A module that provides access to the VolunteerMatch API for CM websites
-core = 6.x
