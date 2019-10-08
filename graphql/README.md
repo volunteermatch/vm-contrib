@@ -2,8 +2,7 @@
 Welcome to the VolunteerMatch GraphQL API. 
 
 ### Getting Started
-New to GraphQL? Check out the [offical docs](http://graphql.org) or
-["How To GraphQL"](https://www.howtographql.com) to get started.
+GraphQL is a flexible data query language that allows you to define API call responses to match your use case. New to GraphQL? Check out the [offical docs](http://graphql.org) or[How To GraphQL](https://www.howtographql.com) to get started.
 
 To familiarize yourself with the VolunteerMatch GraphQL API, you can start right away making some calls with our GraphiQL plugin (coming soon...)
 
