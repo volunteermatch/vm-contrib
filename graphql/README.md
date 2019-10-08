@@ -11,7 +11,7 @@ To familiarize yourself with the VolunteerMatch GraphQL API, you can start right
 To request an API key, please [contact us](https://solutions.volunteermatch.org/solutions/api)!
 
 ### Making calls
-Once you have an API Key, you can either download and run a GraphQL client program, or just right into our example code.
+Once you have an API Key, you can either download and run a GraphQL client, or jump right into our example code.
 
 #### Recommended GraphQL clients
 * GraphiQL: https://electronjs.org/apps/graphiql
