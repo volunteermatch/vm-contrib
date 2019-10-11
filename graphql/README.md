@@ -1,10 +1,10 @@
-## VolunteerMatch GraphQL API
-Welcome to the VolunteerMatch GraphQL API. 
+## VolunteerMatch Open Network API V3
+Welcome to the Open Network API V3, built with GraphQL. 
 
 ### Getting Started
 GraphQL is a flexible data query language that allows you to define API call responses to match your use case. New to GraphQL? Check out the [offical docs](http://graphql.org) or[How To GraphQL](https://www.howtographql.com) to get started.
 
-To familiarize yourself with the VolunteerMatch GraphQL API, you can start right away making some calls with our GraphiQL plugin (coming soon...)
+To familiarize yourself with the Open Network API, you can start right away making some calls with our GraphiQL plugin (coming soon...)
 
 ### Getting an API Key
 To request an API key, please [contact us](https://solutions.volunteermatch.org/solutions/api)!
