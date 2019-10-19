@@ -6,6 +6,9 @@ GraphQL is a flexible data query language that allows you to define API call res
 
 To familiarize yourself with the Open Network API, you can start right away making some calls with our GraphiQL plugin (coming soon...)
 
+### Documentation
+See our [best practices documentation](https://media.volunteermatch.org/docs/api/OpenNetworkAPIv3BestPractices.pdf) for how to best integrate VolunteerMatch content into your application. Detailed query/mutation documentation can be retrieved and viewed with the GraphQL client of your choosing (see below).
+
 ### Getting an API Key
 To request an API key, please [contact us](https://solutions.volunteermatch.org/solutions/api)!
 
