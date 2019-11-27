@@ -14,7 +14,7 @@ To request an API key, please [contact us](https://solutions.volunteermatch.org/
 
 ### Making calls
 All testing should be done in our staging environment. Our endpoints URLs are currently:
-* Staging: https://apibeta.stage.volunteermatch.org/graphql
+* Staging: https://graphql.stage.volunteermatch.org/graphql
 * Production: https://graphql.volunteermatch.org/graphql
 
 Your initial API key will be issued for the staging environment. Your API key must be included as the value for the HTTP X-api-key header in every request. 
