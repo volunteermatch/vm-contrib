@@ -1,9 +1,9 @@
 const axios = require('axios'); 
 
 const API_KEY = '<add api key here>';
-const API_URL = 'https://apibeta.stage.volunteermatch.org/graphql';
+const API_URL = 'https://graphql.stage.volunteermatch.org/graphql';
 
-var query = `query { 
+var q = `query { 
   searchOpportunities(
     input: {
       location: "San Francisco, CA"
@@ -34,7 +34,7 @@ const options = {
 
 axios.post(
   API_URL,
-  JSON.stringify({query}),
+  JSON.stringify({query: q}),
   options
 ).then((response) => {
   console.log(response.status + ' ' + response.statusText);
