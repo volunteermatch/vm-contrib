@@ -10,7 +10,7 @@ To familiarize yourself with the Open Network API, you can start making calls ri
 See our [best practices documentation](https://media.volunteermatch.org/docs/api/OpenNetworkAPIv3BestPractices.pdf) for how to best integrate VolunteerMatch content into your application. Detailed query/mutation documentation can be retrieved and viewed with the GraphQL client of your choosing (see below).
 
 ### Getting an API Key
-To request an API key, please [contact us](https://solutions.volunteermatch.org/solutions/api)!
+To request an API key, please [contact us](https://solutions.volunteermatch.org/contact-us/)!
 
 ### Making calls
 All testing should be done in our staging environment. Our endpoints URLs are currently:
