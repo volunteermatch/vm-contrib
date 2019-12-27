@@ -19,7 +19,7 @@ All testing should be done in our staging environment. Our endpoints URLs are cu
 
 Your initial API key will be issued for the staging environment. Your API key must be included as the value for the HTTP X-api-key header in every request. 
 
-Once you have an API Key, you can either download and run a GraphQL client, or jump right into our example code. Note that all calls currently must be made via POST with content type of *application/json* - GET is not supported in the current API, nor is content type of *application/graphql*
+Once you have an API Key, you can either download and run a GraphQL client, or jump right into our [example code](#example-code). Note that all calls currently must be made via POST with content type of *application/json* - GET is not supported in the current API, nor is content type of *application/graphql*.
 
 #### Recommended GraphQL clients
 * GraphiQL: https://electronjs.org/apps/graphiql
