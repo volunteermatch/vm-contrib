@@ -1,5 +1,5 @@
 ## VolunteerMatch Open Network API V3
-Welcome to the Open Network API V3, built with GraphQL. 
+Welcome to the Open Network API V3, built with GraphQL. This API grants access to the [VolunteerMatch Open Network](https://www.volunteermatch.org).
 
 ### Getting Started
 GraphQL is a flexible data query language that allows you to define API call responses to match your use case. New to GraphQL? Check out the [offical docs](http://graphql.org) or [How To GraphQL](https://www.howtographql.com) to get started.
