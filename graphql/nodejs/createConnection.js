@@ -4,8 +4,8 @@ const API_KEY = '<add api key here>';
 const API_URL = 'https://graphql.stage.volunteermatch.org/graphql';
 
 // You will get an error "A connection for user joe@standard.org already exists."
-// unless you change either the oppId or the users email to one that has not made
-// a connection to this opportunity yet
+// if you run the command more than once unless you change either the oppId or
+// the users email to one that has not made a connection to this opportunity yet
 
 // If a connection is successfully made this query request that the some data
 // about the connection is returned.
@@ -14,7 +14,7 @@ var q = `mutation {
   createConnection ( 
     input: {
     oppId: 248490
-      comments: "Connection created by Postman automated test"
+      comments: "Connection created by node.js example code"
       volunteer: {
         email: "joe@standard.org"
         firstName: "Joe"
