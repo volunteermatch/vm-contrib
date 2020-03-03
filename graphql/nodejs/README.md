@@ -10,7 +10,7 @@ To pull down dependencies, run:
 npm install
 ```
 
-## Run
+## Run searchOpportunities
 
 Edit index.js, and add in your API key to the constant near the top of the file, and save. Run:
 
@@ -18,3 +18,10 @@ Edit index.js, and add in your API key to the constant near the top of the file,
 node index.js
 ```
 
+## Run createConnection
+
+Edit createConnection.js, and add in your API key to the constant near the top of the file, and save. Run:
+
+```bash
+node createConnection.js
+```
