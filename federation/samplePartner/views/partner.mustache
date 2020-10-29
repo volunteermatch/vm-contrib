@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>VolunteerMatch Management Demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {font-family: "Lato", sans-serif}
+</style>
+<body>
+
+    <!-- Page content -->
+    <div class="" style="max-width:2000px;margin-top:40px">
+
+    <!-- Authorize Section -->
+    <div class="" style="max-width:800px" id="band">
+        <h2 class="">Access VolunteerMatch</h2>
+        <p class=""><i>Continue below to query your opportunities from VolunteerMatch</i></p>
+        <p class="">To continue, you must authorize access your VolunteerMatch account. Click below to login to VolunteerMatch.</p>
+        <div class="">            
+            <div class="">
+                <a id=authlink href="#">Authorize</a>
+            </div>
+        </div>
+        <p>
+            Current client ID: <input type=text id=clientid name=clientid value={{clientid}} width=500>
+        </p>
+    </div>
+    
+    </div>
+
+    <!-- Footer -->
+    <footer></footer>
+
+    <script>
+        function buildUrl() {
+            clientid = document.getElementById('clientid').value;            
+            console.log('clientid read: ' + clientid);
+            window.location.href = '{{{auth_url}}}' + clientid;
+            return false;
+        }
+        document.getElementById('authlink')
+            .addEventListener('click', () => {
+                return buildUrl();
+        });
+    </script>
+
+    </body>
+</html>
+

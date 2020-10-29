@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<title>VolunteerMatch Management Demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {font-family: "Lato", sans-serif}
+</style>
+<body>
+
+    <!-- Page content -->
+    <div class="" style="max-width:2000px;margin-top:40px">
+
+      <!-- Authorize Section -->
+      <div class="" style="max-width:800px" id="band">
+        <h2 class="">User Info</h2>
+        <p>first name {{firstName}}</p>
+        <p>last name {{lastName}}</p>
+        <p>email: {{email}}</p>
+        <h2>org name: {{org.name}} </h2>
+
+        <a id=create_link href="./createOpp?orgId={{org.id}}">Create a new opportunity</a>
+        <br/><br/>
+
+        <div id="update_msg" style="color: green">{{updateMsg}}</div>
+        <div id="error_msg" style="color: red">{{errMsg}}</div>
+
+        {{#opps}}
+          <form id="opp_form-{{id}}" action="/editOpps" method="get">
+            Opps Id: {{id}}
+              <input type="hidden" id="oppId-{{id}}" name="oppId" value="{{id}}"/>
+              Title:
+              <input type="text" id="title-{{id}}" name="title" value="{{title}}" size="50"/> <br/>
+              Description
+              <input type="text" id="desc-{{id}}" name="desc" value="{{description}}" size="100"/>
+              <input id="submit-{{id}}" type="submit" value="submit changes"/>
+          </form>
+            <br/>
+        {{/opps}}
+      </div>
+
+    <!-- End Page Content -->
+    </div>
+
+    <!-- Footer -->
+    <footer></footer>
+
+    <script></script>
+
+    </body>
+</html>

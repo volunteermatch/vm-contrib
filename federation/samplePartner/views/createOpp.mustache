@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<title>VolunteerMatch Management Demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {font-family: "Lato", sans-serif}
+</style>
+<body>
+
+<!-- Page content -->
+<div class="" style="max-width:2000px;margin-top:40px">
+  <h2>Create An Opportunity</h2>
+
+  <div class="" style="max-width:800px" id="band">
+      <form id="create_opp_form" action="/createOpp" method="get">
+        Title:
+        <input type="text" id="title" name="title" size="50"/> <br/>
+        Description
+        <input type="text" id="desc" name="desc" size="100"/>
+        <input type="submit" value="Create Opportunity"/>
+        <input type="hidden" name="isSubmit" value="true" />
+        <input type="hidden" id="orgId" name="orgId" value="{{orgId}}"/>
+      </form>
+      <br/>
+  </div>
+
+  <!-- End Page Content -->
+</div>
+
+<!-- Footer -->
+<footer></footer>
+
+<script></script>
+
+</body>
+</html>
