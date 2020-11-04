@@ -4,7 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body {font-family: "Lato", sans-serif}
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      padding: 0 10px;
+    }
+
+    h2 {
+      border-bottom: 1px dashed lightskyblue;
+      color: hotpink;
+      letter-spacing: -1px;
+      margin-top: 50px;
+    }
+
+    a, a:visited {
+      color: deepskyblue;
+    }
+
+    input[type="text"] {
+      border: 1px solid lightgray;
+      border-radius: 3px;
+      display: block;
+      font-size: 16px;
+      max-width: 550px;
+      padding: 8px 0;
+      text-indent: 8px;
+      width: 100%;
+    }
+
+    input[type="text"]:focus {
+      border: 1px solid deepskyblue;
+      outline: deepskyblue;
+    }
+
+    input[type="submit"] {
+      border: 2px solid deepskyblue;
+      cursor: pointer;
+      padding: 15px;
+      margin: 55px 0 0;
+      background: white;
+      color: deepskyblue;
+      font-size: 16px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    input[type="submit"]:hover {
+      background: deepskyblue;
+      color: white;
+    }
+
+    .box {
+      border-bottom: 1px solid lightskyblue;
+      max-width:800px;
+      padding-bottom: 55px;
+    }
+
+    @media only screen and (min-width: 480px) {
+      body {
+        padding: 0 50px;
+      }
+    }
 </style>
 <body>
 
@@ -12,7 +73,7 @@
 <div class="" style="max-width:2000px;margin-top:40px">
   <h2>Create An Opportunity</h2>
 
-  <div class="" style="max-width:800px" id="band">
+  <div class="box" id="band">
       <form id="create_opp_form" action="/createOpp" method="get">
         Title:
         <input type="text" id="title" name="title" size="50"/> <br/>

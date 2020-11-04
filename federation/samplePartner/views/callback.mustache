@@ -4,38 +4,146 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-    body {font-family: "Lato", sans-serif}
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      padding: 0 10px;
+    }
+
+    h2 {
+      border-bottom: 1px dashed lightskyblue;
+      color: hotpink;
+      letter-spacing: -1px;
+      margin-top: 50px;
+    }
+
+    a, a:visited {
+      color: deepskyblue;
+      text-decoration: none;
+    }
+
+    input[type="text"] {
+      border: 1px solid lightgray;
+      border-radius: 3px;
+      display: block;
+      font-size: 16px;
+      max-width: 550px;
+      padding: 8px 0;
+      text-indent: 8px;
+      width: 100%;
+    }
+
+    input[type="text"]:focus {
+      border: 1px solid deepskyblue;
+      outline: deepskyblue;
+    }
+
+    input[type="submit"] {
+      border: 2px solid deepskyblue;
+      cursor: pointer;
+      padding: 10px;
+      margin: 30px 0 0;
+      background: white;
+      color: deepskyblue;
+      font-size: 16px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    input[type="submit"]:hover {
+      background: deepskyblue;
+      color: white;
+    }
+
+    .box {
+      max-width:800px;
+      padding-bottom: 55px;
+    }
+
+    .org {
+      margin-bottom: 0;
+    }
+
+    .create {
+      display: block;
+      margin: 25px 0;
+    }
+
+    .opp {
+      border-bottom: 1px solid lightskyblue;
+      padding: 35px 10px;
+    }
+
+    .opp:first-of-type {
+      border-top: 1px solid lightskyblue;
+    }
+
+    @media only screen and (min-width: 480px) {
+      body {
+        padding: 0 50px;
+      }
+
+      .opp {
+        border-bottom: 1px solid lightskyblue;
+        padding: 35px 20px;
+      }
+    }
 </style>
 <body>
 
     <!-- Page content -->
+
     <div class="" style="max-width:2000px;margin-top:40px">
 
       <!-- Authorize Section -->
-      <div class="" style="max-width:800px" id="band">
+      <div class="box" id="band">
         <h2 class="">User Info</h2>
-        <p>first name {{firstName}}</p>
-        <p>last name {{lastName}}</p>
-        <p>email: {{email}}</p>
-        <h2>org name: {{org.name}} </h2>
+        <table>
+          <tr>
+            <td>
+              First Name: &nbsp;
+            </td>
+            <td valign="top">
+              <b>{{firstName}}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Last Name: &nbsp;
+            </td>
+            <td valign="top">
+              <b>{{lastName}}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Email: &nbsp;
+            </td>
+            <td valign="top">
+             <b>{{email}}</b>
+            </td>
+          </tr>
+        </table>
 
-        <a id=create_link href="./createOpp?orgId={{org.id}}">Create a new opportunity</a>
-        <br/><br/>
+        <h2 class="org">Org Name: {{org.name}}</h2>
+
+        <a id=create_link class="create" href="./createOpp?orgId={{org.id}}">Create a new opportunity</a>
 
         <div id="update_msg" style="color: green">{{updateMsg}}</div>
-        <div id="error_msg" style="color: red">{{errMsg}}</div>
+        <div id="error_msg" style="color: red; padding: 0 0 10px">{{errMsg}}</div>
 
         {{#opps}}
-          <form id="opp_form-{{id}}" action="/editOpps" method="get">
-            Opps Id: {{id}}
-              <input type="hidden" id="oppId-{{id}}" name="oppId" value="{{id}}"/>
-              Title:
-              <input type="text" id="title-{{id}}" name="title" value="{{title}}" size="50"/> <br/>
-              Description
-              <input type="text" id="desc-{{id}}" name="desc" value="{{description}}" size="100"/>
-              <input id="submit-{{id}}" type="submit" value="submit changes"/>
+          <form id="opp_form-{{id}}" class="opp" action="/editOpps" method="get">
+            Opportunity ID: <b>{{id}}</b>
+            <br/><br/>
+            <input type="hidden" id="oppId-{{id}}" name="oppId" value="{{id}}"/>
+            Title:
+            <input type="text" id="title-{{id}}" name="title" value="{{title}}" size="50"/> <br/>
+            Description
+            <input type="text" id="desc-{{id}}" name="desc" value="{{description}}" size="100"/>
+            <input id="submit-{{id}}" type="submit" value="Submit Changes"/>
           </form>
-            <br/>
         {{/opps}}
       </div>
 

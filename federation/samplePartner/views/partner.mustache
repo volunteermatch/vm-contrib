@@ -4,7 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-    body {font-family: "Lato", sans-serif}
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      padding: 0 10px;
+    }
+
+    h2 {
+      border-bottom: 1px dashed lightskyblue;
+      color: hotpink;
+      letter-spacing: -1px;
+    }
+
+    a, a:visited {
+      color: deepskyblue;
+    }
+
+    input[type="text"] {
+      border: 1px solid lightgray;
+      border-radius: 3px;
+      display: block;
+      font-size: 16px;
+      max-width: 400px;
+      padding: 8px 0;
+      text-indent: 8px;
+      width: 100%;
+    }
+
+    input[type="text"]:focus {
+      border: 1px solid deepskyblue;
+      outline: deepskyblue;
+    }
+
+    .box {
+      border-bottom: 1px solid lightskyblue;
+      max-width:800px;
+      padding-bottom: 55px;
+    }
+
+    .auth {
+      margin-bottom: 0;
+      padding: 25px 0 0;
+    }
+
+    @media only screen and (min-width: 480px) {
+      body {
+        padding: 0 50px;
+      }
+    }
 </style>
 <body>
 
@@ -12,20 +60,18 @@
     <div class="" style="max-width:2000px;margin-top:40px">
 
     <!-- Authorize Section -->
-    <div class="" style="max-width:800px" id="band">
+    <div class="box" id="band">
         <h2 class="">Access VolunteerMatch</h2>
         <p class=""><i>Continue below to query your opportunities from VolunteerMatch</i></p>
         <p class="">To continue, you must authorize access your VolunteerMatch account. Click below to login to VolunteerMatch.</p>
-        <div class="">            
-            <div class="">
-                <a id=authlink href="#">Authorize</a>
-            </div>
-        </div>
         <p>
             Current client ID: <input type=text id=clientid name=clientid value={{clientid}} width=500>
         </p>
+        <p class="auth">
+          <a id=authlink href="#">Authorize</a>
+        </p>
     </div>
-    
+
     </div>
 
     <!-- Footer -->
@@ -33,7 +79,7 @@
 
     <script>
         function buildUrl() {
-            clientid = document.getElementById('clientid').value;            
+            clientid = document.getElementById('clientid').value;
             console.log('clientid read: ' + clientid);
             window.location.href = '{{{auth_url}}}' + clientid;
             return false;
