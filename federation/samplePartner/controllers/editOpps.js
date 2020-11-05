@@ -40,7 +40,7 @@ router.get('/editOpps', function(req,res) {
     if (respon.status ==200 && reply.errors === undefined) {
       res.redirect('/callback?updateMsg=Update successful');
     } else {
-      res.redirect('/callback?errMsg=Update unsuccessful '+reply.errors);
+      res.redirect('/callback?errMsg=Update unsuccessful '+JSON.stringify(reply.errors));
     }
 
   }).catch(function (err) {console.log(err)});
