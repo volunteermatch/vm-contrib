@@ -105,6 +105,7 @@ var loadPageContent = function(req, res) {
 
       }).catch(function (err) {
         console.log(err)
+        res.send('API call search failed: ' + err.response.status);
       });
 
     } else {
@@ -112,9 +113,9 @@ var loadPageContent = function(req, res) {
       setDisplayVars(res, pageContent);
     }
 
-
   }).catch(function (err) {
     console.log(err)
+    res.send('API call getUserInfo failed: ' + err.response.status);
   });
 };
 
