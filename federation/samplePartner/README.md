@@ -4,28 +4,26 @@
   (simple user info and the opportunities she manages after the user has successfully logged unto VolunteerMatch's system.)
 * Some simple functionality for the user to create and update opportunities.
 
-### To run this tool:
-
 ## Install the environment
-1. install node.js
+1. install node.js (if you already have node.js installed, make sure the version is v10.10.0 or higher)
 
-2. To pull down dependencies, run:
+2. Install npm if you don't already have it. NPM version should be 6.4.1 or higher. To pull down dependencies, run:
 
 ```bash
 npm install
 ```
 
-### Setup the necessary configuration
+## Setup the necessary configuration
 1. Setup VolunteerMatch login url: in ~/samplePartner/config/default.js, replace line 1
 
-      let baseurl = '<VolunteerMatch login url>';
-  with VolunteerMatch's actual login URL
+        let baseurl = '<VolunteerMatch login url>';
+    with VolunteerMatch's actual login URL
 
 2. Setup client id and secret: in ~/samplePartner/config/default.js,
 
-      clientid: '<my client id>',
-      client_secret: '<my client secret>',
-  with your client id and client secret
+        clientid: '<my client id>',
+        client_secret: '<my client secret>',
+   with your client id and client secret
 
 3. Setup VolunteerMatch's API URL: in ~/samplePartner/config/default.js, replace line 14
 
@@ -33,7 +31,7 @@ npm install
     with VolunteerMatch's actual API URL
 
 ### Run and test the program:
-1. from your samplePartner directory, run:
+1. From your samplePartner directory, run:
 
 ```bash
 npm start
@@ -47,7 +45,8 @@ npm start
   If the account you signed in is not an organization's admin, you will only see your personal info and no organization info)
 
 4. In the Organization's dashboard (or user info) page:
-  If your account's organization has no opportunities, you can create an opportunity by clicking on the "Create an opportunity" link.
-  If your organization has opportunities, you will see both the "Create an opportunity" link, and a list of opportunities.
-  You can edit each opportunities title or description by typing the new title or description in the text box and click on submit changes.
-  If the edit was successful, you will see a message "Update successful" at the top of the opportunity list.
+  * If your account's organization has no opportunities, you can create an opportunity by clicking on the "Create an opportunity" link.
+  * If your organization has opportunities, you will see both the "Create an opportunity" link, and a list of opportunities.
+  * You can edit each opportunities title or description by typing the new title or description in the text box and click on submit changes.
+  * If the edit was successful, you will see a message "Update successful" at the top of the opportunity list.
+  * If you have no organizations under your account, you will still see a create opportunity link, but your creation will fail if you try to use that link.
