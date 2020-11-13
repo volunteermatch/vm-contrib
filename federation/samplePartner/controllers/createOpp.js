@@ -11,10 +11,9 @@ router.get('/createOpp', function(req,res) {
   let desc = req.query.desc;
   let orgId = req.query.orgId;
   let isSubmit = req.query.isSubmit;
+  let userEmail = req.query.email;
 
   if (isSubmit) {
-    console.log("    submitting to create an opp");
-
     let queryBody = {
       "query": "mutation { createOpportunity ( input: {" +
       "orgId:\"" + orgId + "\"," +
@@ -24,8 +23,8 @@ router.get('/createOpp', function(req,res) {
       "volunteersNeeded:20," +
       "location:{virtual:true}" +
       "contact:{" +
-      " email:\"hsue25@ow.com\"," +
-      " firstName:\"Alsa\"," +
+      " email:\"" + userEmail + "\"," +
+      " firstName:\"Elsa\"" +
       "}," +
       "categories:[seniors]," +
       "dateRange: {" +
@@ -39,6 +38,8 @@ router.get('/createOpp', function(req,res) {
         'Accept': 'application/json'
       }
     };
+
+    console.log("\n   create query= "+JSON.stringify(queryBody));
 
     // create opp call
     axios.post(config.api.api_url, queryBody,
@@ -63,7 +64,8 @@ router.get('/createOpp', function(req,res) {
     console.log("   displaying createOpp");
     res.render ('createOpp',
         {
-         orgId: orgId
+          orgId: orgId,
+          email: userEmail
         }
     );
   }
