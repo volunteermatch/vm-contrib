@@ -6,7 +6,7 @@ The VolunteerMatch Open Network API allows access to the [VolunteerMatch Network
 To get set up as a VolunteerMatch federation partner, please [contact us](https://solutions.volunteermatch.org/contact-us/)!
 
 ### Federation Documentation
-Federation is powered by VolunteerMatch non-profit administrators granting federated systems permissions to administer their accounts on their behalf. For details on how to implement the OAuth2 authorization code grant with VolunteerMatch, please see [Authorizing OAuth Apps](https://github.com/volunteermatch/vm-contrib/blob/master/federation/AUTHORIZE.md) and for an introduction to the use cases and APIs provided, see the document on [Federating with the VolunteerMatch Open Network - Best Practices](http://volr.org/federation).
+Federation is powered by VolunteerMatch non-profit administrators granting federated systems permissions to administer their accounts on their behalf. For details on how to implement the OAuth2 authorization code grant with VolunteerMatch, please see [Authorizing OAuth Apps](https://github.com/volunteermatch/vm-contrib/blob/master/federation/AUTHORIZE.md) and for an introduction to the use cases and APIs provided, see [Federating with the VolunteerMatch Open Network - Best Practices](http://volr.org/federation).
 
 ### Federation Example Code
 See the following simple node-express example website to demonstrate possible federation implementation. [Federated Partner Sample](https://github.com/volunteermatch/vm-contrib/tree/master/federation/samplePartner)
