@@ -1,0 +1,19 @@
+{
+  "dataStudio": {
+    "name": "One Call Connections",
+    "logoUrl": "https://cdn.volunteermatch.org/www/images/volunteermatch-logo-160x29@2x.png",
+    "company": "VolunteerMatch",
+    "companyUrl": "https://www.volunteermatch.org/",
+    "addonUrl": "https://www.volunteermatch.org/",
+    "supportUrl": "https://github.com/googledatastudio/community-connectors/issues",
+    "description": "VolunteerMatch Connections Data",
+    "authType": [
+      "NONE"
+    ],
+    "templates": {
+      "default": "fca0eb98-e525-4799-8d49-a0035c954eae"
+    }
+  },
+  "runtimeVersion": "V8",
+  "exceptionLogging": "STACKDRIVER"
+}
