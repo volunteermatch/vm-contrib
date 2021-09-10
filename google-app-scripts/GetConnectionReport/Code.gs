@@ -1,5 +1,5 @@
 var cc = DataStudioApp.createCommunityConnector();
-var DEFAULT_PACKAGE = '2021-06-01 to 2021-08-31';
+var DEFAULT_PACKAGE = '2021-08-16 to 2021-08-31';
 
 // [START get_config]
 // https://developers.google.com/datastudio/connector/reference#getconfig
@@ -19,7 +19,7 @@ function getConfig() {
       .setName(
           'Enter a date range in this format: 2021-07-01 to 2021-08-12'
       )
-      .setHelpText('e.g. "2021-04-01 to 2021-08-12"')
+      .setHelpText('e.g. "2021-08-01 to 2021-08-12"')
       .setPlaceholder(DEFAULT_PACKAGE)
       .setAllowOverride(true);
 
@@ -70,6 +70,7 @@ function getFields() {
       .setId('orgName')
       .setName('Organization Name')
       .setType(types.TEXT);
+
   fields
       .newDimension()
       .setId('connectionId')
@@ -81,6 +82,12 @@ function getFields() {
       .setId('connectionCount')
       .setName('Connection Count')
       .setType(types.NUMBER);
+
+  fields
+      .newMetric()
+      .setId('accountName')
+      .setName('Account Name')
+      .setType(types.TEXT);
 
   return fields;
 }
@@ -150,6 +157,7 @@ function fetchDataFromApi(request) {
         "      containerName"+
         "      date"+
         "      connectionId"+
+        "      accountName"+
         "    }"+
         "}}"
   };
@@ -157,9 +165,14 @@ function fetchDataFromApi(request) {
   var options = {
     'method' : 'post',
     'contentType': 'application/json',
+    "headers" : {
+      'x-api-key':   'my-api-key',
+      'X-VM-Gateway-secret':	'my-gatway-secret',
+    },
     'payload' : JSON.stringify(data1)
   };
-  var httpResponse = UrlFetchApp.fetch('https://www.hsue.impactonline.org/s/report', options);
+
+  var httpResponse = UrlFetchApp.fetch('https://www.prelive.impactonline.org/s/graphql/spqr/report', options);
 
   return httpResponse;
 }
@@ -187,7 +200,7 @@ function formatData(requestedFields, ref) {
     switch (requestedField.getId()) {
       case 'container':
         return ref.containerName;
-      case 'activeOppCount':
+      case 'oppCount':
         return ref.activeOppCount;
       case 'connectionCount':
         return ref.connectionCount;
@@ -199,6 +212,8 @@ function formatData(requestedFields, ref) {
         return ref.orgName;
       case 'connectionId':
         return ref.connectionId;
+      case 'accountName':
+        return ref.accountName;
       case 'date':
         return ref.date.replace(/-/g, '');
       default:
