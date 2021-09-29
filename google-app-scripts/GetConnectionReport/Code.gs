@@ -1,5 +1,6 @@
 var cc = DataStudioApp.createCommunityConnector();
 var DEFAULT_PACKAGE = '2021-08-16 to 2021-08-31';
+var alltimeCount = 0;
 
 // [START get_config]
 // https://developers.google.com/datastudio/connector/reference#getconfig
@@ -84,10 +85,16 @@ function getFields() {
       .setType(types.NUMBER);
 
   fields
-      .newMetric()
+      .newDimension()
       .setId('accountName')
       .setName('Account Name')
       .setType(types.TEXT);
+
+  fields
+      .newMetric()
+      .setId('allTimeCount')
+      .setName('All time connections')
+      .setType(types.NUMBER);
 
   return fields;
 }
@@ -148,6 +155,7 @@ function fetchDataFromApi(request) {
         "  dateRange: \""+request.dateRange.startDate+ " to "+     request.dateRange.endDate + "\""+
         " }){"+
         "  numberOfResults"+
+        "  allTimeConnections"+
         "    connections{"+
         "      activeOppCount"+
         "      connectionCount"+
@@ -172,7 +180,7 @@ function fetchDataFromApi(request) {
     'payload' : JSON.stringify(data1)
   };
 
-  var httpResponse = UrlFetchApp.fetch('https://www.prelive.impactonline.org/s/graphql/spqr/report', options);
+  var httpResponse = UrlFetchApp.fetch('https://www.volunteermatch.org/s/graphql/spqr/report', options);
 
   return httpResponse;
 }
@@ -180,6 +188,7 @@ function fetchDataFromApi(request) {
 function normalizeResponse(request, responseString) {
   var jsonObj = JSON.parse(responseString);
   var containerRefs = jsonObj.data.getConnectionReport.connections;
+  allTimeCount =  jsonObj.data.getConnectionReport.allTimeConnections;
 
   return containerRefs;
 }
@@ -195,7 +204,8 @@ function getFormattedData(response, requestedFields) {
 
 function formatData(requestedFields, ref) {
 
-  var row = requestedFields.asArray().map(function(requestedField) {
+  var requestArray = requestedFields.asArray();
+  var row = requestArray.map(function(requestedField) {
 
     switch (requestedField.getId()) {
       case 'container':
@@ -216,6 +226,8 @@ function formatData(requestedFields, ref) {
         return ref.accountName;
       case 'date':
         return ref.date.replace(/-/g, '');
+      case 'allTimeCount':
+        return allTimeCount;
       default:
         return '';
     }
