@@ -149,7 +149,7 @@ function getData(request) {
 function fetchDataFromApi(request) {
   var data1 = {
     "query":
-        "query{getConnectionReport("+
+        "query{getReportData("+
         "  input:{"+
         "  containers:[\"tier0ca\", \"tier1ca\", \"tier2ca\", \"tier3ca\"]"+
         "  dateRange: \""+request.dateRange.startDate+ " to "+     request.dateRange.endDate + "\""+
@@ -180,15 +180,15 @@ function fetchDataFromApi(request) {
     'payload' : JSON.stringify(data1)
   };
 
-  var httpResponse = UrlFetchApp.fetch('https://www.volunteermatch.org/s/graphql/spqr/report', options);
+  var httpResponse = UrlFetchApp.fetch('https://graphql.volunteermatch.org/graphql/', options);
 
   return httpResponse;
 }
 
 function normalizeResponse(request, responseString) {
   var jsonObj = JSON.parse(responseString);
-  var containerRefs = jsonObj.data.getConnectionReport.connections;
-  allTimeCount =  jsonObj.data.getConnectionReport.allTimeConnections;
+  var containerRefs = jsonObj.data.getReportData.connections;
+  allTimeCount =  jsonObj.data.getReportData.allTimeConnections;
 
   return containerRefs;
 }
