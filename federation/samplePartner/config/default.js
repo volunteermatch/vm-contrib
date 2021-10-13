@@ -1,16 +1,16 @@
-let baseurl = '<VolunteerMatch login url>';
+let baseurl = 'https://dev-33257370.okta.com';
 
 module.exports = {
-    clientid: '<my client id>',
-    client_secret: '<my client secret>',
-    urls: {
-        auth: baseurl + '/login',
-        token: baseurl + '/token'
-    },
-    callback: {
-        url: 'http://localhost:3000/callback'
-    },
-    api: {
-        api_url: '<VolunteerMatch API url>'
-    }
-  };
+  clientid: '$CLIENT_ID',
+  client_secret: '$CLIENT_SECRET',
+  urls: {
+    auth: baseurl + '/oauth2/default/v1/authorize',
+    token: baseurl + '/oauth2/default/v1/token'
+  },
+  callback: {
+    url: 'http://localhost:3000/callback'
+  },
+  api: {
+    api_url: '$API_URL'
+  }
+};

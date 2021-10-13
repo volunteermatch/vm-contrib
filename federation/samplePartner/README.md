@@ -16,8 +16,8 @@ npm install
 ## Setup the necessary configuration
 1. Setup VolunteerMatch login url: in ~/samplePartner/config/default.js, replace line 1
 
-        let baseurl = '<VolunteerMatch login url>';
-    with VolunteerMatch's actual login URL
+        let baseurl = 'OKA_URL';
+    with VolunteerMatch Okta actual login URL
 
 2. Setup client id and secret: in ~/samplePartner/config/default.js,
 

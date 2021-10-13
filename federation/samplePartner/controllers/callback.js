@@ -11,10 +11,10 @@ router.get('/callback', function(req,res){
   
   if (request_globals.refresh_token === undefined) {
 
-    if (returned_state != request_globals.request_state) {
-      res.send('Security failure, unknown state received');
-      console.error('Unexpected state: ' + returned_state);
-    }
+    // if (returned_state != request_globals.request_state) {
+    //   res.send('Security failure, unknown state received');
+    //   console.error('Unexpected state: ' + returned_state);
+    // }
     const options = {
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -27,7 +27,7 @@ router.get('/callback', function(req,res){
           grant_type: 'authorization_code',
           redirect_uri: config.callback.url,
           code: authcode,
-          client_id: config.clientid
+          scope: 'offline_access'
         }),
         options
     ).then(function (resp) {
@@ -37,7 +37,7 @@ router.get('/callback', function(req,res){
       loadPageContent(req, res);
 
     }).catch(function (error) {
-      console.log('got an error getting the token');
+      console.log('\n got an error getting the token');
       console.log(error.toJSON());
       res.send('got an error getting the token');
     });

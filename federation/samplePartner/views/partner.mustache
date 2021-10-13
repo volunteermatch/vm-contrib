@@ -81,7 +81,7 @@
         function buildUrl() {
             clientid = document.getElementById('clientid').value;
             console.log('clientid read: ' + clientid);
-            window.location.href = '{{{auth_url}}}' + clientid;
+            window.location.href = '{{{auth_url}}}';
             return false;
         }
         document.getElementById('authlink')
