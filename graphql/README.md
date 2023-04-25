@@ -10,7 +10,7 @@ You can familiarize yourself with the Open Network API, view the API schema, and
 See our [best practices documentation](https://impactonline.atlassian.net/wiki/spaces/VONA/pages/1573781549/Best+Practices+for+the+VolunteerMatch+Open+Network+Opportunities+API) for how to best integrate VolunteerMatch content into your application. Detailed query/mutation documentation can be retrieved and viewed with the GraphQL client of your choosing (see below) or [online](https://media.volunteermatch.org/federation/index.html).
 
 ### Getting an API Key
-To request an API key, please [contact us](https://solutions.volunteermatch.org/contact-us/)!
+To request an API key, please [contact us](https://about.volunteermatch.org/#contact-us)!
 
 ### Making calls
 All testing should be done in our staging environment. Our endpoints URLs are currently:
